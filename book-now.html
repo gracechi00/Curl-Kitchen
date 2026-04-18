@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Now | Curl Kitchen Salon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --black:      #111111;
+      --off-black:  #1c1c1c;
+      --white:      #ffffff;
+      --off-white:  #faf9f8;
+      --lavender:   #c4adc8;
+      --lavender-lt:#e8dfe9;
+      --lavender-dk:#9b82a0;
+      --gray-mid:   #888;
+      --border:     #e2dfe3;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 44px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--off-black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--lavender-dk); }
+    .nav-active { color: var(--lavender-dk) !important; }
+    .nav-book {
+      background: var(--lavender) !important;
+      color: var(--off-black) !important;
+      padding: 10px 26px;
+    }
+    .nav-book:hover { background: var(--lavender-dk) !important; color: white !important; }
+
+    /* HERO HEADER */
+    .page-header {
+      padding-top: 68px;
+      background: var(--black);
+      text-align: center;
+      padding-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(196,173,200,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header-inner { padding: 60px 52px 0; position: relative; z-index: 1; }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 24px;
+    }
+    .breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--lavender); }
+    .breadcrumb span { color: var(--lavender); }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .page-header p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* BOOKING CONTAINER */
+    .booking-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* NOTE BOX */
+    .booking-note {
+      background: var(--lavender-lt);
+      border-left: 3px solid var(--lavender);
+      padding: 18px 24px;
+      margin-bottom: 36px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .booking-note-icon {
+      color: var(--lavender-dk);
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .booking-note p {
+      font-size: 0.84rem;
+      line-height: 1.7;
+      color: var(--off-black);
+    }
+    .booking-note strong { font-weight: 600; }
+
+    /* VAGARO EMBED */
+    .vagaro-wrap {
+      background: white;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      min-height: 700px;
+      position: relative;
+    }
+
+    .vagaro-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: white;
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .vagaro-loading.hidden { opacity: 0; }
+
+    .spinner {
+      width: 36px; height: 36px;
+      border: 2px solid var(--lavender-lt);
+      border-top-color: var(--lavender-dk);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .vagaro-loading p {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+    }
+
+    .vagaro-iframe {
+      width: 100%;
+      min-height: 700px;
+      border: none;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* FALLBACK BUTTON (shown if iframe fails) */
+    .vagaro-fallback {
+      display: none;
+      text-align: center;
+      padding: 60px 24px;
+    }
+    .vagaro-fallback p {
+      font-size: 0.88rem;
+      color: var(--gray-mid);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    /* HELP STRIP */
+    .help-strip {
+      margin-top: 40px;
+      background: white;
+      border: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .help-strip-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--black);
+    }
+    .help-strip-text p { font-size: 0.84rem; color: var(--gray-mid); line-height: 1.6; }
+    .help-strip-actions { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+
+    .btn-black {
+      background: var(--black);
+      color: white;
+      padding: 12px 28px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-black:hover { background: var(--lavender-dk); }
+
+    .btn-outline-dark {
+      border: 1px solid var(--border);
+      color: var(--off-black);
+      padding: 12px 28px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline-dark:hover { border-color: var(--lavender-dk); color: var(--lavender-dk); }
+
+    /* DETANGLE POLICY */
+    .policy-strip {
+      margin-top: 20px;
+      background: #fff8f0;
+      border: 1px solid #f0dfc8;
+      padding: 20px 28px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .policy-strip-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+    .policy-strip p { font-size: 0.8rem; line-height: 1.7; color: #7a5c3a; }
+    .policy-strip strong { font-weight: 600; }
+
+    /* CTA FOOTER STRIP */
+    .cta-strip {
+      background: var(--lavender);
+      padding: 56px 52px;
+      text-align: center;
+    }
+    .cta-strip h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--off-black);
+      margin-bottom: 10px;
+    }
+    .cta-strip p {
+      font-size: 0.84rem;
+      color: rgba(28,28,28,0.6);
+      margin-bottom: 28px;
+    }
+    .btn-dark {
+      background: var(--black);
+      color: white;
+      padding: 14px 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-dark:hover { background: var(--off-black); }
+
+    /* FOOTER */
+    footer { background: #0d0d0d; padding: 64px 52px 32px; color: rgba(255,255,255,0.45); }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 52px;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand img { height: 48px; object-fit: contain; margin-bottom: 20px; display: block; filter: brightness(0) invert(1); opacity: 0.85; }
+    .footer-brand p { font-size: 0.8rem; line-height: 1.85; max-width: 240px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 22px; }
+    .social-link {
+      width: 34px; height: 34px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 0.6rem; font-weight: 700;
+      color: rgba(255,255,255,0.45);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-link:hover { border-color: var(--lavender); color: var(--lavender); }
+    footer h4 { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender); margin-bottom: 18px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer a { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--lavender-lt); }
+    .footer-detail { font-size: 0.82rem; line-height: 2; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.7rem; letter-spacing: 0.06em; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links .hide-sm { display: none; }
+      .page-header-inner { padding: 40px 24px 0; }
+      .booking-wrap { padding: 40px 16px 60px; }
+      .help-strip { padding: 24px; flex-direction: column; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .cta-strip { padding: 48px 24px; }
+      footer { padding: 48px 24px 28px; }
+    }
+    @media (max-width: 500px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .nav-links { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="curlkitchen.html" class="nav-logo">
+    <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="curlkitchen.html#services" class="hide-sm">Services</a></li>
+    <li><a href="curlkitchen.html#location" class="hide-sm">Contact</a></li>
+    <li><a href="tel:3123264549" class="hide-sm" style="font-size:0.72rem;font-weight:400;letter-spacing:0.06em;color:var(--gray-mid);">312-326-4549</a></li>
+    <li><a href="book-now.html" class="nav-book nav-active">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      <a href="curlkitchen.html">Home</a>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,0.6);">Book Now</span>
+    </div>
+    <h1>Curl Kitchen Salon Booking</h1>
+    <p>View our services, appointment times, and select your stylist. We never double-book — your time is fully yours.</p>
+  </div>
+</div>
+
+<!-- BOOKING SECTION -->
+<div class="booking-wrap">
+
+  <!-- Note -->
+  <div class="booking-note">
+    <div class="booking-note-icon">ℹ</div>
+    <p>
+      <strong>Prices vary by service and stylist.</strong> If you have any questions regarding pricing or would like to schedule a consultation, please call us at
+      <a href="tel:3123264549" style="color:var(--lavender-dk); font-weight:600;">(312) 326-4549</a>
+      or email <a href="mailto:curlkitchen@gmail.com" style="color:var(--lavender-dk); font-weight:600;">curlkitchen@gmail.com</a>.
+    </p>
+  </div>
+
+  <!-- Vagaro Embed -->
+  <div class="vagaro-wrap" id="vagaroWrap">
+    <div class="vagaro-loading" id="vagaroLoading">
+      <div class="spinner"></div>
+      <p>Loading booking calendar…</p>
+    </div>
+    <iframe
+      id="vagaroFrame"
+      class="vagaro-iframe"
+      src="https://www.vagaro.com/curlkitchensalon/services"
+      title="Curl Kitchen Salon — Book an Appointment"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
+    <!-- Fallback shown if iframe is blocked -->
+    <div class="vagaro-fallback" id="vagaroFallback">
+      <p>Our booking calendar couldn't load inline.<br>Click below to open it directly on Vagaro.</p>
+      <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-black">Open Booking on Vagaro →</a>
+    </div>
+  </div>
+
+  <!-- Detangle Policy -->
+  <div class="policy-strip">
+    <div class="policy-strip-icon">⚠</div>
+    <p>
+      <strong>Detangle Policy:</strong> Please arrive with your hair detangled. Severely tangled or matted hair will consume appointment time and disrupt service.
+      A <strong>$25 detangle fee</strong> applies if your stylist needs to detangle beyond normal servicing time ($15 per every additional 15 minutes).
+      <br><br>
+      <strong>Parking note:</strong> The parking lot behind the BP gas station is no longer available for Curl Kitchen clients.
+    </p>
+  </div>
+
+  <!-- Help Strip -->
+  <div class="help-strip">
+    <div class="help-strip-text">
+      <h3>Need help booking?</h3>
+      <p>If you need any assistance with the booking process, we're always happy to help during regular business hours.</p>
+    </div>
+    <div class="help-strip-actions">
+      <a href="tel:3123264549" class="btn-black">Call Us: (312) 326-4549</a>
+      <a href="mailto:curlkitchen@gmail.com" class="btn-outline-dark">Email Us</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <h2>Ready for your curl transformation?</h2>
+  <p>Appointment only — no walk-ins, no double-booking, ever.</p>
+  <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-dark">Book on Vagaro →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+      <p>Celebrating natural curls in Chicago since 2013. For naturally curly women, operated by naturally curly women, owned by a naturally curly woman.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/curlkitchensalon/" target="_blank" class="social-link">IG</a>
+        <a href="https://www.facebook.com/curlkitchensalon/" target="_blank" class="social-link">FB</a>
+        <a href="https://www.yelp.com/biz/curl-kitchen-chicago" target="_blank" class="social-link">YP</a>
+      </div>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="curlkitchen.html">Home</a></li>
+        <li><a href="curlkitchen.html#services">Services</a></li>
+        <li><a href="curlkitchen.html#location">Contact</a></li>
+        <li><a href="book-now.html">Book Now</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Visit Us</h4>
+      <p class="footer-detail">
+        3428 S. King Drive<br>
+        Chicago, IL 60616<br><br>
+        <a href="tel:3123264549">(312) 326-4549</a><br>
+        <a href="mailto:curlkitchen@gmail.com">curlkitchen@gmail.com</a>
+      </p>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <ul style="list-style:none; font-size:0.8rem; line-height:1; color:rgba(255,255,255,0.45);">
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Mon</span><span>9am – 2pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Tue – Thu</span><span>9am – 9pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Fri</span><span>9am – 6pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Sat</span><span>6am – 6pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0;"><span>Sun</span><span>9am – 6pm</span></li>
+      </ul>
+      <p style="font-size:0.72rem; color:rgba(255,255,255,0.3); margin-top:12px; font-style:italic;">By Appointment Only</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Curl Kitchen Salon · Chicago, IL</p>
+    <p>Est. Autumn 2013</p>
+  </div>
+</footer>
+
+<script>
+  // Hide spinner once iframe loads
+  const frame = document.getElementById('vagaroFrame');
+  const loading = document.getElementById('vagaroLoading');
+  const fallback = document.getElementById('vagaroFallback');
+
+  frame.addEventListener('load', () => {
+    loading.classList.add('hidden');
+    // Check if iframe loaded real content (some browsers block cross-origin check)
+    try {
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      if (!doc || doc.body.innerHTML === '') {
+        frame.style.display = 'none';
+        fallback.style.display = 'block';
+      }
+    } catch(e) {
+      // Cross-origin — assume it loaded fine (Vagaro allows embedding)
+      loading.classList.add('hidden');
+    }
+  });
+
+  // Show fallback after 10s if still loading
+  setTimeout(() => {
+    if (!loading.classList.contains('hidden')) {
+      frame.style.display = 'none';
+      loading.style.display = 'none';
+      fallback.style.display = 'block';
+    }
+  }, 10000);
+</script>
+
+</body>
+</html>

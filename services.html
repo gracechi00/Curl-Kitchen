@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | Curl Kitchen Salon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --black:      #111111;
+      --off-black:  #1c1c1c;
+      --white:      #ffffff;
+      --off-white:  #faf9f8;
+      --lavender:   #c4adc8;
+      --lavender-lt:#e8dfe9;
+      --lavender-dk:#9b82a0;
+      --gray-lt:    #f5f3f5;
+      --gray-mid:   #888;
+      --border:     #e2dfe3;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--black); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 68px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 44px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+    .nav-links a { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--off-black); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--lavender-dk); }
+    .nav-active { color: var(--lavender-dk) !important; border-bottom: 1px solid var(--lavender-dk); padding-bottom: 2px; }
+    .nav-book { background: var(--black) !important; color: var(--white) !important; padding: 10px 26px; transition: background 0.25s !important; }
+    .nav-book:hover { background: var(--lavender-dk) !important; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding-top: 68px; background: var(--black); text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(196,173,200,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header-inner { padding: 60px 52px 56px; position: relative; z-index: 1; }
+    .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+    .breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--lavender); }
+    .breadcrumb span { color: var(--lavender); }
+    .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; font-style: italic; color: var(--white); margin-bottom: 12px; }
+    .page-header p { font-size: 0.88rem; color: rgba(255,255,255,0.50); max-width: 480px; margin: 0 auto 0; line-height: 1.75; }
+
+    /* CATEGORY TABS */
+    .tabs-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 68px; z-index: 50;
+      overflow-x: auto;
+    }
+    .tabs-inner { display: flex; justify-content: center; gap: 0; padding: 0 52px; min-width: max-content; margin: 0 auto; }
+    .tab-btn {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gray-mid); background: none; border: none; cursor: pointer;
+      padding: 18px 28px; border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s; white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--black); }
+    .tab-btn.active { color: var(--black); border-bottom-color: var(--lavender-dk); }
+
+    /* CONTENT */
+    .services-content { max-width: 860px; margin: 0 auto; padding: 56px 24px 80px; }
+
+    /* CATEGORY SECTION */
+    .category { display: none; animation: fadeIn 0.3s ease; }
+    .category.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .category-header { margin-bottom: 36px; }
+    .category-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; color: var(--black); margin-bottom: 10px; }
+    .category-header p { font-size: 0.86rem; color: var(--gray-mid); line-height: 1.7; max-width: 480px; }
+
+    /* SERVICE LIST */
+    .service-list { border-top: 1px solid var(--border); margin-bottom: 40px; }
+
+    .service-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .service-name { font-size: 0.92rem; font-weight: 500; color: var(--black); line-height: 1.4; }
+    .service-note { font-size: 0.76rem; color: var(--gray-mid); margin-top: 3px; font-weight: 400; }
+    .service-price { font-size: 0.9rem; font-weight: 600; color: var(--black); white-space: nowrap; text-align: right; }
+    .service-price.consult { font-size: 0.75rem; font-weight: 500; color: var(--gray-mid); }
+
+    .btn-book-sm {
+      background: var(--lavender);
+      color: var(--off-black);
+      padding: 8px 18px;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-book-sm:hover { background: var(--lavender-dk); color: white; }
+
+    /* PRICE NOTE */
+    .price-note {
+      font-size: 0.76rem;
+      color: var(--gray-mid);
+      line-height: 1.7;
+      padding: 16px 20px;
+      background: var(--lavender-lt);
+      border-left: 3px solid var(--lavender);
+      margin-bottom: 32px;
+    }
+    .price-note strong { color: var(--off-black); font-weight: 600; }
+
+    /* STEAM BADGE */
+    .steam-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--black); color: var(--lavender-lt);
+      padding: 10px 20px;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    /* BIG BOOK BUTTON */
+    .category-cta { margin-top: 8px; }
+    .btn-black {
+      background: var(--black); color: white;
+      padding: 15px 40px;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; display: inline-block; transition: background 0.2s;
+    }
+    .btn-black:hover { background: var(--lavender-dk); }
+
+    /* CTA STRIP */
+    .cta-strip { background: var(--lavender); padding: 56px 52px; text-align: center; }
+    .cta-strip h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 400; font-style: italic; color: var(--off-black); margin-bottom: 10px; }
+    .cta-strip p { font-size: 0.84rem; color: rgba(28,28,28,0.6); margin-bottom: 28px; }
+    .btn-dark { background: var(--black); color: white; padding: 14px 40px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--off-black); }
+
+    /* FOOTER */
+    footer { background: #0d0d0d; padding: 64px 52px 32px; color: rgba(255,255,255,0.45); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-brand img { height: 48px; object-fit: contain; margin-bottom: 20px; display: block; filter: brightness(0) invert(1); opacity: 0.85; }
+    .footer-brand p { font-size: 0.8rem; line-height: 1.85; max-width: 240px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 22px; }
+    .social-link { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.45); transition: border-color 0.2s, color 0.2s; }
+    .social-link:hover { border-color: var(--lavender); color: var(--lavender); }
+    footer h4 { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender); margin-bottom: 18px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer a { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--lavender-lt); }
+    .footer-detail { font-size: 0.82rem; line-height: 2; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.7rem; letter-spacing: 0.06em; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links .hide-sm { display: none; }
+      .page-header-inner { padding: 40px 24px 44px; }
+      .tabs-inner { padding: 0 16px; }
+      .tab-btn { padding: 16px 16px; font-size: 0.62rem; }
+      .service-item { grid-template-columns: 1fr; gap: 10px; }
+      .service-price { text-align: left; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .cta-strip { padding: 48px 24px; }
+      footer { padding: 48px 24px 28px; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="curlkitchen.html" class="nav-logo">
+    <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="services.html" class="nav-active">Services</a></li>
+    <li><a href="curlkitchen.html#location" class="hide-sm">Contact</a></li>
+    <li><a href="tel:3123264549" class="hide-sm" style="font-size:0.72rem;font-weight:400;letter-spacing:0.06em;color:var(--gray-mid);">312-326-4549</a></li>
+    <li><a href="book-now.html" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      <a href="curlkitchen.html">Home</a>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,0.6);">Services</span>
+    </div>
+    <h1>Our Services Menu</h1>
+    <p>Upscale, natural healthy hair care and styling. Every service includes a steam treatment and trim.</p>
+  </div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="showCategory('silkpress', this)">Silk Press &amp; Styling</button>
+    <button class="tab-btn" onclick="showCategory('natural', this)">Natural Sets</button>
+    <button class="tab-btn" onclick="showCategory('color', this)">Hair Color</button>
+    <button class="tab-btn" onclick="showCategory('cuts', this)">Cuts &amp; Trims</button>
+    <button class="tab-btn" onclick="showCategory('braids', this)">Braids, Locs &amp; Extensions</button>
+  </div>
+</div>
+
+<!-- SERVICES CONTENT -->
+<div class="services-content">
+
+  <div class="steam-badge">✦ Steam treatment &amp; trim included with every service</div>
+
+  <!-- SILK PRESS & STYLING -->
+  <div class="category active" id="cat-silkpress">
+    <div class="category-header">
+      <h2>Silk Press &amp; Styling</h2>
+      <p>A sleek, smooth finish using heat protection and precision flat-iron technique that honors your natural curl underneath.</p>
+    </div>
+    <div class="price-note"><strong>Prices vary by hair length and density.</strong> Shoulder length & shorter starts at $75. Book on Vagaro to see all length options and select your stylist.</div>
+    <div class="service-list">
+      <div class="service-item">
+        <div>
+          <div class="service-name">Silkpress – Shoulder Length &amp; Shorter</div>
+          <div class="service-note">Blowdry + flat iron. Steam treatment &amp; trim included.</div>
+        </div>
+        <div class="service-price">$75</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Silkpress – Medium Length</div>
+          <div class="service-note">Blowdry + flat iron. Steam treatment &amp; trim included.</div>
+        </div>
+        <div class="service-price">$85+</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Silkpress – Long Length</div>
+          <div class="service-note">Blowdry + flat iron. Steam treatment &amp; trim included.</div>
+        </div>
+        <div class="service-price">$95+</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+    </div>
+    <div class="category-cta">
+      <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-black">Book a Silk Press</a>
+    </div>
+  </div>
+
+  <!-- NATURAL SETS -->
+  <div class="category" id="cat-natural">
+    <div class="category-header">
+      <h2>Natural Sets</h2>
+      <p>Curl-enhancing sets that work with your natural texture — no heat required.</p>
+    </div>
+    <div class="price-note"><strong>Prices vary by hair length and density.</strong> Prices shown are for medium-length hair. See Vagaro for all options.</div>
+    <div class="service-list">
+      <div class="service-item">
+        <div>
+          <div class="service-name">Wash &amp; Go</div>
+          <div class="service-note">Cleanse, condition &amp; curl definition. Steam treatment &amp; trim included.</div>
+        </div>
+        <div class="service-price">$70</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Rod Set – Medium</div>
+          <div class="service-note">Perm rod set for bouncy, defined curls. Steam treatment &amp; trim included.</div>
+        </div>
+        <div class="service-price">$105</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Two-Strand Twist Set</div>
+          <div class="service-note">Protective style with beautiful definition. Steam treatment &amp; trim included.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+    </div>
+    <div class="category-cta">
+      <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-black">Book a Natural Set</a>
+    </div>
+  </div>
+
+  <!-- HAIR COLOR -->
+  <div class="category" id="cat-color">
+    <div class="category-header">
+      <h2>Hair Color</h2>
+      <p>Bold or subtle — all color services are performed with curl integrity in mind.</p>
+    </div>
+    <div class="price-note"><strong>Color prices vary based on hair length, density, and service type.</strong> A consultation may be required for corrective or complex color work.</div>
+    <div class="service-list">
+      <div class="service-item">
+        <div>
+          <div class="service-name">Double Process (Lighten + Tone)</div>
+          <div class="service-note">Full bleach and toner application for maximum lift and dimension.</div>
+        </div>
+        <div class="service-price">$225</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Single Process Color</div>
+          <div class="service-note">All-over color application.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Highlights / Partial Color</div>
+          <div class="service-note">Dimensional color for depth and brightness.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Corrective Color</div>
+          <div class="service-note">Consultation required.</div>
+        </div>
+        <div class="service-price consult">Consultation</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+    </div>
+    <div class="category-cta">
+      <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-black">Book a Color Service</a>
+    </div>
+  </div>
+
+  <!-- CUTS & TRIMS -->
+  <div class="category" id="cat-cuts">
+    <div class="category-header">
+      <h2>Cuts &amp; Trims</h2>
+      <p>Precision cuts shaped to your curl pattern and natural growth goals. A trim is included with every service.</p>
+    </div>
+    <div class="price-note"><strong>All cuts are performed on natural hair.</strong> Prices vary by length and density. See Vagaro for the full menu.</div>
+    <div class="service-list">
+      <div class="service-item">
+        <div>
+          <div class="service-name">Curly Cut / Deva Cut</div>
+          <div class="service-note">Dry-cut technique designed to enhance your natural curl shape.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Trim</div>
+          <div class="service-note">End trims to remove damage and promote healthy growth. Included with all services.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Big Chop</div>
+          <div class="service-note">A fresh start. Consultation included.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+    </div>
+    <div class="category-cta">
+      <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-black">Book a Cut</a>
+    </div>
+  </div>
+
+  <!-- BRAIDS, LOCS & EXTENSIONS -->
+  <div class="category" id="cat-braids">
+    <div class="category-header">
+      <h2>Braids, Locs &amp; Extensions</h2>
+      <p>Protective styles and loc maintenance from experienced, licensed cosmetologists.</p>
+    </div>
+    <div class="price-note"><strong>Prices vary by style, length, and complexity.</strong> Book on Vagaro or call us at (312) 326-4549 for a consultation.</div>
+    <div class="service-list">
+      <div class="service-item">
+        <div>
+          <div class="service-name">Starter Locs</div>
+          <div class="service-note">Begin your loc journey with a professional foundation.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Loc Retwist / Maintenance</div>
+          <div class="service-note">Keep your locs neat and healthy.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Braids</div>
+          <div class="service-note">Protective braiding styles.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Extensions</div>
+          <div class="service-note">Length and volume added with natural hair extensions.</div>
+        </div>
+        <div class="service-price consult">See Vagaro</div>
+        <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-book-sm">Book</a>
+      </div>
+    </div>
+    <div class="category-cta">
+      <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-black">Book a Protective Style</a>
+    </div>
+  </div>
+
+</div><!-- /services-content -->
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <h2>Ready to book your appointment?</h2>
+  <p>Appointment only — no walk-ins, no double-booking, ever.</p>
+  <a href="book-now.html" class="btn-dark">Book Now</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+      <p>Celebrating natural curls in Chicago since 2013. For naturally curly women, operated by naturally curly women, owned by a naturally curly woman.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/curlkitchensalon/" target="_blank" class="social-link">IG</a>
+        <a href="https://www.facebook.com/curlkitchensalon/" target="_blank" class="social-link">FB</a>
+        <a href="https://www.yelp.com/biz/curl-kitchen-chicago" target="_blank" class="social-link">YP</a>
+      </div>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="curlkitchen.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="curlkitchen.html#location">Contact</a></li>
+        <li><a href="book-now.html">Book Now</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Visit Us</h4>
+      <p class="footer-detail">
+        3428 S. King Drive<br>Chicago, IL 60616<br><br>
+        <a href="tel:3123264549">(312) 326-4549</a><br>
+        <a href="mailto:curlkitchen@gmail.com">curlkitchen@gmail.com</a>
+      </p>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <ul style="list-style:none;font-size:0.8rem;line-height:1;color:rgba(255,255,255,0.45);">
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Mon</span><span>9am–2pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Tue–Thu</span><span>9am–9pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Fri</span><span>9am–6pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Sat</span><span>6am–6pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;"><span>Sun</span><span>9am–6pm</span></li>
+      </ul>
+      <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:12px;font-style:italic;">By Appointment Only</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Curl Kitchen Salon · Chicago, IL</p>
+    <p>Est. Autumn 2013</p>
+  </div>
+</footer>
+
+<script>
+  function showCategory(id, btn) {
+    document.querySelectorAll('.category').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('cat-' + id).classList.add('active');
+    btn.classList.add('active');
+    // Smooth scroll to content
+    document.querySelector('.services-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
