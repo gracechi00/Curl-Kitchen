@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curl Kitchen Salon | Chicago's Premier Natural Hair Salon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --black:      #111111;
+      --off-black:  #1c1c1c;
+      --white:      #ffffff;
+      --off-white:  #faf9f8;
+      --lavender:   #c4adc8;
+      --lavender-lt:#e8dfe9;
+      --lavender-dk:#9b82a0;
+      --gray-lt:    #f2f0f2;
+      --gray-mid:   #888;
+      --border:     #e2dfe3;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.07); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--off-black);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--lavender-dk); }
+
+    .nav-book {
+      background: var(--black) !important;
+      color: var(--white) !important;
+      padding: 10px 26px;
+      transition: background 0.25s !important;
+    }
+    .nav-book:hover { background: var(--lavender-dk) !important; }
+    .nav-phone { color: var(--gray-mid) !important; font-weight: 400 !important; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://static.wixstatic.com/media/e57add_d1538442c83040a48984c8de34ee432e~mv2.jpeg/v1/crop/x_0,y_693,w_8688,h_4957/fill/w_1600,h_960,al_c,q_85,usm_0.66_1.00_0.01/AdobeStock_271226295.jpeg');
+      background-size: cover;
+      background-position: center 40%;
+      transform: scale(1.04);
+      animation: zoomIn 14s ease-out forwards;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1.0); }
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, rgba(17,17,17,0.72) 0%, rgba(17,17,17,0.40) 60%, rgba(17,17,17,0.18) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 52px;
+      max-width: 680px;
+      animation: fadeUp 1s 0.2s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--lavender);
+      color: var(--off-black);
+      padding: 6px 16px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 6.5vw, 5.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .hero-title em { font-style: italic; font-weight: 400; color: var(--lavender); }
+    .hero-sub {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.72);
+      max-width: 440px;
+      margin-bottom: 40px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--lavender);
+      color: var(--off-black);
+      padding: 15px 38px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--lavender-dk); color: white; transform: translateY(-1px); }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--white);
+      padding: 15px 38px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+    .hero-rating {
+      position: absolute;
+      bottom: 40px;
+      right: 52px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.10);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 14px 20px;
+      color: white;
+      text-decoration: none;
+      animation: fadeUp 1s 0.7s both;
+    }
+    .hero-rating .stars { color: var(--lavender); font-size: 0.9rem; letter-spacing: 2px; }
+    .hero-rating .val { font-size: 0.72rem; font-weight: 600; }
+    .hero-rating .sub-label { font-size: 0.65rem; opacity: 0.7; }
+
+    /* STRIP */
+    .strip {
+      background: var(--black);
+      padding: 18px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .strip-item {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+    }
+    .strip-dot { color: var(--lavender); font-size: 0.5rem; }
+
+    /* ABOUT */
+    .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+    .about-img-wrap { position: relative; overflow: hidden; }
+    .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .about-img-accent { position: absolute; bottom: 0; right: 0; width: 100px; height: 100px; background: var(--lavender); }
+
+    .about-text {
+      padding: 80px 72px;
+      background: var(--off-white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--lavender-dk);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--lavender-dk); }
+
+    .about-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--black);
+      margin-bottom: 24px;
+    }
+    .about-text h2 em { font-style: italic; font-weight: 400; color: var(--lavender-dk); }
+    .about-text p { font-size: 0.9rem; line-height: 1.85; color: #555; margin-bottom: 14px; }
+
+    .about-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .pill {
+      background: var(--lavender-lt);
+      color: var(--lavender-dk);
+      padding: 7px 16px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* SERVICES */
+    .services { padding: 100px 52px; background: var(--white); text-align: center; }
+    .section-head { margin-bottom: 56px; }
+    .section-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 14px;
+    }
+    .section-head h2 em { font-style: italic; font-weight: 400; }
+    .section-head p { font-size: 0.88rem; color: var(--gray-mid); max-width: 420px; margin: 0 auto; line-height: 1.75; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      max-width: 1080px;
+      margin: 0 auto 48px;
+    }
+    .svc-card { position: relative; overflow: hidden; aspect-ratio: 3/4; }
+    .svc-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+      filter: grayscale(15%);
+    }
+    .svc-card:hover img { transform: scale(1.07); filter: grayscale(0%); }
+    .svc-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.0) 55%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 30px 26px;
+    }
+    .svc-num { font-size: 0.6rem; letter-spacing: 0.22em; color: var(--lavender); margin-bottom: 6px; }
+    .svc-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 600; color: white; line-height: 1.1; }
+    .svc-sub { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.5; }
+
+    .btn-black {
+      background: var(--black);
+      color: white;
+      padding: 14px 38px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-black:hover { background: var(--lavender-dk); }
+
+    /* PILLARS */
+    .pillars {
+      background: var(--black);
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .pillar {
+      padding: 56px 48px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .pillar:last-child { border-right: none; }
+    .pillar-bar { width: 40px; height: 3px; background: var(--lavender); margin-bottom: 28px; }
+    .pillar h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    .pillar p { font-size: 0.84rem; line-height: 1.8; color: rgba(255,255,255,0.45); }
+    .pillar a {
+      display: inline-block;
+      margin-top: 22px;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lavender);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .pillar a:hover { color: var(--lavender-lt); }
+    .pillar a::after { content: ' →'; }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: 100px 52px; background: var(--off-white); text-align: center; }
+    .reviews-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .review {
+      background: white;
+      padding: 36px 30px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .review-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      color: var(--lavender);
+      line-height: 0.8;
+      margin-bottom: 16px;
+    }
+    .review-stars { color: var(--lavender-dk); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 14px; }
+    .review-text { font-size: 0.86rem; line-height: 1.85; color: #555; font-style: italic; margin-bottom: 20px; }
+    .review-author { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--black); }
+    .review-platform { font-size: 0.62rem; color: var(--gray-mid); margin-top: 2px; }
+
+    /* GALLERY */
+    .gallery-section { padding-top: 80px; overflow: hidden; }
+    .gallery-head { text-align: center; padding: 0 52px 44px; }
+    .gallery-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--black);
+    }
+    .gallery-track-outer { overflow: hidden; }
+    .gallery-track {
+      display: flex;
+      gap: 8px;
+      animation: scroll 35s linear infinite;
+      width: max-content;
+    }
+    .gallery-track:hover { animation-play-state: paused; }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .gallery-item { width: 260px; height: 340px; flex-shrink: 0; overflow: hidden; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-cta { text-align: center; padding: 36px 52px; }
+
+    /* LOCATION */
+    .location { display: grid; grid-template-columns: 1fr 1fr; }
+    .location-text {
+      background: var(--lavender-lt);
+      padding: 80px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .location-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+    .location-text .sub-text { font-size: 0.85rem; color: var(--lavender-dk); margin-bottom: 48px; line-height: 1.7; }
+    .loc-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .loc-group h4 {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lavender-dk);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--lavender);
+    }
+    .loc-group p, .loc-group a { font-size: 0.88rem; line-height: 1.9; color: var(--off-black); text-decoration: none; display: block; }
+    .loc-group a:hover { color: var(--lavender-dk); }
+    .loc-group .note { font-size: 0.75rem; color: #999; margin-top: 8px; font-style: italic; }
+    .loc-group .dir-link {
+      margin-top: 16px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--off-black);
+    }
+    .loc-group .dir-link:hover { color: var(--lavender-dk); }
+
+    .location-img { position: relative; min-height: 500px; overflow: hidden; }
+    .location-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .location-img-overlay {
+      position: absolute; inset: 0;
+      background: rgba(17,17,17,0.25);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .map-btn {
+      background: white;
+      color: var(--black);
+      padding: 15px 34px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .map-btn:hover { background: var(--lavender); color: var(--off-black); }
+
+    /* CTA */
+    .cta {
+      background: var(--black);
+      padding: 100px 52px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(196,173,200,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .cta p { font-size: 0.85rem; color: rgba(255,255,255,0.50); margin-bottom: 40px; letter-spacing: 0.06em; }
+    .btn-lavender {
+      background: var(--lavender);
+      color: var(--off-black);
+      padding: 17px 48px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-lavender:hover { background: var(--lavender-dk); color: white; }
+
+    /* FOOTER */
+    footer { background: #0d0d0d; padding: 64px 52px 32px; color: rgba(255,255,255,0.45); }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 52px;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .footer-brand img {
+      height: 48px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      display: block;
+      filter: brightness(0) invert(1);
+      opacity: 0.85;
+    }
+    .footer-brand p { font-size: 0.8rem; line-height: 1.85; max-width: 240px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 22px; }
+    .social-link {
+      width: 34px; height: 34px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      font-size: 0.6rem; font-weight: 700;
+      color: rgba(255,255,255,0.45);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-link:hover { border-color: var(--lavender); color: var(--lavender); }
+
+    footer h4 { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender); margin-bottom: 18px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer a { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--lavender-lt); }
+    .footer-detail { font-size: 0.82rem; line-height: 2; }
+
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.7rem; letter-spacing: 0.06em; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; }
+      .nav-links { gap: 20px; }
+      .hero-content { padding: 0 24px; }
+      .hero-rating { right: 24px; }
+      .about, .location { grid-template-columns: 1fr; }
+      .about-img-wrap { height: 320px; }
+      .location-img { min-height: 300px; order: -1; }
+      .about-text, .location-text { padding: 56px 32px; }
+      .services-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto 40px; }
+      .pillars { grid-template-columns: 1fr; }
+      .pillar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 40px 32px; }
+      .reviews-wrap { grid-template-columns: 1fr; }
+      .loc-cols { grid-template-columns: 1fr; gap: 28px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links .hide-sm { display: none; }
+      .strip { padding: 14px 20px; gap: 16px; }
+      .services, .testimonials, .cta { padding: 64px 24px; }
+      footer { padding: 48px 24px 28px; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="services.html" class="hide-sm">Services</a></li>
+    <li><a href="#location" class="hide-sm">Contact</a></li>
+    <li><a href="tel:3123264549" class="nav-phone hide-sm">312-326-4549</a></li>
+    <li><a href="book-now.html" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bronzeville, Chicago</div>
+    <h1 class="hero-title">Your Curls.<br><em>Our Craft.</em></h1>
+    <p class="hero-sub">Chicago's premier salon for naturally curly hair. Appointment only. Steam treatments and trims included with every service.</p>
+    <div class="hero-ctas">
+      <a href="book-now.html" class="btn-primary">Book Appointment</a>
+      <a href="services.html" class="btn-outline">View Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <span class="strip-item">Appointment Only</span>
+  <span class="strip-dot">✦</span>
+  <span class="strip-item">No Double-Booking</span>
+  <span class="strip-dot">✦</span>
+  <span class="strip-item">Steam Treatment with Every Service</span>
+  <span class="strip-dot">✦</span>
+  <span class="strip-item">Women-Owned</span>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-img-wrap">
+    <img src="salon-interior.png" alt="Curl Kitchen Stylist" />
+    <div class="about-img-accent"></div>
+  </div>
+  <div class="about-text">
+    <p class="label">Our Story</p>
+    <h2>More than a salon.<br><em>A community.</em></h2>
+    <p>Curl Kitchen Salon is the premier salon for naturally curly haircare services and beauty needs. We've been in business since the Autumn of 2013, when we started as a natural hair care and beauty boutique on Chicago's South Side.</p>
+    <p>We are dedicated to serving our community by providing the best quality hair services to the Chicagoland area. We are an appointment-only salon and we pride ourselves on never double-booking.</p>
+    <p>We are for naturally curly women, operated by naturally curly women, and owned by a naturally curly woman.</p>
+    <div class="about-pills">
+      <span class="pill">Natural Hair Specialists</span>
+      <span class="pill">Steam Treatments Included</span>
+      <span class="pill">Women-Owned & Operated</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-head">
+    <p class="label" style="justify-content:center;">What We Offer</p>
+    <h2>A Signature Experience<br>at <em>Curl Kitchen</em></h2>
+    <p>Every service includes a steam treatment and trim — because healthy hair is always the goal.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card">
+      <img src="about-salon.png" alt="Silk Press" />
+      <div class="svc-overlay">
+        <div class="svc-num">01 /</div>
+        <div class="svc-title">Silk Press</div>
+        <p class="svc-sub">A sleek finish that honors your natural texture underneath.</p>
+      </div>
+    </div>
+    <div class="svc-card">
+      <img src="service-silk-press.png" alt="Hair Color" />
+      <div class="svc-overlay">
+        <div class="svc-num">02 /</div>
+        <div class="svc-title">Hair Color</div>
+        <p class="svc-sub">Bold or subtle — always with curl integrity in mind.</p>
+      </div>
+    </div>
+    <div class="svc-card">
+      <img src="service-hair-color.png" alt="Hair Cuts" />
+      <div class="svc-overlay">
+        <div class="svc-num">03 /</div>
+        <div class="svc-title">Hair Cuts</div>
+        <p class="svc-sub">Precision cuts shaped to your curl pattern and goals.</p>
+      </div>
+    </div>
+  </div>
+  <a href="services.html" class="btn-black">View Full Menu</a>
+</section>
+
+<!-- PILLARS -->
+<div class="pillars">
+  <div class="pillar">
+    <div class="pillar-bar"></div>
+    <h3>Book Your Appointment</h3>
+    <p>Ready to transform your curls? Schedule online with your preferred stylist. No waiting room, no double-booking — just you.</p>
+    <a href="book-now.html">Book Now</a>
+  </div>
+  <div class="pillar">
+    <div class="pillar-bar"></div>
+    <h3>Our Full Services Menu</h3>
+    <p>From silk presses to corrective color, explore our complete menu of curl-forward treatments — all including steam and trims.</p>
+    <a href="services.html">View Menu</a>
+  </div>
+  <div class="pillar">
+    <div class="pillar-bar"></div>
+    <h3>Get in Touch</h3>
+    <p>Questions? Call us at 312-326-4549 or email curlkitchen@gmail.com. Hours vary by day — see below, or call to confirm.</p>
+    <a href="index.html#location">Contact Us</a>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-head">
+    <p class="label" style="justify-content:center;">Client Love</p>
+    <h2>What Our Clients Say</h2>
+    <p>Thousands of curls celebrated and restored since 2013.</p>
+  </div>
+  <div class="reviews-wrap">
+    <div class="review">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Airikah is the best stylist there and I have never felt as comfortable with anyone as I do with my hair. From the first moment I sat in her chair I realized she had growing hands. Her energy is truly unmatched — always so uplifting. Definitely found my long-term stylist.</p>
+      <p class="review-author">Jasmine I.</p>
+      <p class="review-platform">Verified · Vagaro · Aug 2024</p>
+    </div>
+    <div class="review">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Eboni did a great job! I was getting a rod set for a job interview and it came out perfect — and I got the job! The result was BEAUTIFUL and Eboni made sure my hair was well trimmed and healthy. Big plus.</p>
+      <p class="review-author">Ceceila</p>
+      <p class="review-platform">Verified · Vagaro</p>
+    </div>
+    <div class="review">
+      <div class="review-quote">"</div>
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Jasmine is absolutely the best! She takes her time and knows what she is doing!</p>
+      <p class="review-author">Lola M.</p>
+      <p class="review-platform">Verified · Vagaro · May 2022</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY CAROUSEL -->
+<section class="gallery-section">
+  <div class="gallery-head">
+    <p class="label" style="justify-content:center; margin-bottom:10px;">Follow Along</p>
+    <h2>@curlkitchensalon</h2>
+  </div>
+  <div class="gallery-track-outer">
+    <div class="gallery-track">
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_baa0f301787d47a984d7d51f8dab20bf~mv2.png/v1/fill/w_534,h_534,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_51_06%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_863d861213e44a36857636063fc3f0d3~mv2.png/v1/fill/w_537,h_537,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_52_05%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_af0aa84458e446adb4458755c6b491f1~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_50_31%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_620206483a68403ba1d5790d7b5d36f5~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_55_11%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_cb7f6e080c924335bb70679dc47b811e~mv2.png/v1/fill/w_800,h_800,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/cksservicepic2.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_c56e59a239e94f89b445e7bfd12c5669~mv2.jpg/v1/crop/x_1919,y_0,w_1517,h_1517/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/shutterstock_475174225.jpg" alt="Curl Kitchen work" /></div>
+      <!-- duplicates for loop -->
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_baa0f301787d47a984d7d51f8dab20bf~mv2.png/v1/fill/w_534,h_534,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_51_06%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_863d861213e44a36857636063fc3f0d3~mv2.png/v1/fill/w_537,h_537,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_52_05%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_af0aa84458e446adb4458755c6b491f1~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_50_31%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_620206483a68403ba1d5790d7b5d36f5~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_55_11%20PM.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_cb7f6e080c924335bb70679dc47b811e~mv2.png/v1/fill/w_800,h_800,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/cksservicepic2.png" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_c56e59a239e94f89b445e7bfd12c5669~mv2.jpg/v1/crop/x_1919,y_0,w_1517,h_1517/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/shutterstock_475174225.jpg" alt="Curl Kitchen work" /></div>
+    </div>
+  </div>
+  <div class="gallery-cta">
+    <a href="https://www.instagram.com/curlkitchensalon/" target="_blank" class="btn-black">Follow on Instagram</a>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location" id="location">
+  <div class="location-text">
+    <p class="label">Find Us</p>
+    <h2>Visit Us in Bronzeville</h2>
+    <p class="sub-text">Located in the heart of Chicago's South Side. Come for the curls, stay for the community.</p>
+    <div class="loc-cols">
+      <div class="loc-group">
+        <h4>Visit Us</h4>
+        <p>3428 S. King Drive<br>Chicago, IL 60616</p>
+        <a href="tel:3123264549">(312) 326-4549</a>
+        <a href="mailto:curlkitchen@gmail.com">curlkitchen@gmail.com</a>
+        <a href="https://www.google.com/maps/place/3428+S+King+Dr,+Chicago,+IL+60616" target="_blank" class="dir-link">Get Directions →</a>
+      </div>
+      <div class="loc-group">
+        <h4>Hours</h4>
+        <ul style="list-style:none; font-size:0.88rem; line-height:1; color:var(--off-black);">
+          <li style="display:flex; justify-content:space-between; gap:24px; padding:6px 0; border-bottom:1px solid rgba(196,173,200,0.3);"><span>Mon</span><span>9am – 2pm</span></li>
+          <li style="display:flex; justify-content:space-between; gap:24px; padding:6px 0; border-bottom:1px solid rgba(196,173,200,0.3);"><span>Tue – Thu</span><span>9am – 9pm</span></li>
+          <li style="display:flex; justify-content:space-between; gap:24px; padding:6px 0; border-bottom:1px solid rgba(196,173,200,0.3);"><span>Fri</span><span>9am – 6pm</span></li>
+          <li style="display:flex; justify-content:space-between; gap:24px; padding:6px 0; border-bottom:1px solid rgba(196,173,200,0.3);"><span>Sat</span><span>6am – 6pm</span></li>
+          <li style="display:flex; justify-content:space-between; gap:24px; padding:6px 0;"><span>Sun</span><span>9am – 6pm</span></li>
+        </ul>
+        <p class="note" style="margin-top:12px;">By Appointment Only</p>
+      </div>
+    </div>
+  </div>
+  <div class="location-img">
+    <img src="service-hair-cut.png" alt="Curl Kitchen Salon Interior" />
+    <div class="location-img-overlay">
+      <a href="https://www.google.com/maps/place/3428+S+King+Dr,+Chicago,+IL+60616" target="_blank" class="map-btn">Get Directions →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta">
+  <h2>Ready for your curl transformation?</h2>
+  <p>Book online today. Appointment only.</p>
+  <a href="book-now.html" class="btn-lavender">Book Your Appointment</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+      <p>Celebrating natural curls in Chicago since 2013. For naturally curly women, operated by naturally curly women, owned by a naturally curly woman.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/curlkitchensalon/" target="_blank" class="social-link">IG</a>
+        <a href="https://www.facebook.com/curlkitchensalon/" target="_blank" class="social-link">FB</a>
+        <a href="https://www.yelp.com/biz/curl-kitchen-chicago" target="_blank" class="social-link">YP</a>
+      </div>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="index.html#location">Contact</a></li>
+        <li><a href="book-now.html">Book Now</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Visit Us</h4>
+      <p class="footer-detail">
+        3428 S. King Drive<br>
+        Chicago, IL 60616<br><br>
+        <a href="tel:3123264549">(312) 326-4549</a><br>
+        <a href="mailto:curlkitchen@gmail.com">curlkitchen@gmail.com</a>
+      </p>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <ul style="list-style:none; font-size:0.8rem; line-height:1; color:rgba(255,255,255,0.45);">
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Mon</span><span>9am – 2pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Tue – Thu</span><span>9am – 9pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Fri</span><span>9am – 6pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><span>Sat</span><span>6am – 6pm</span></li>
+        <li style="display:flex; justify-content:space-between; gap:20px; padding:5px 0;"><span>Sun</span><span>9am – 6pm</span></li>
+      </ul>
+      <p style="font-size:0.72rem; color:rgba(255,255,255,0.3); margin-top:12px; font-style:italic;">By Appointment Only</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Curl Kitchen Salon · Chicago, IL</p>
+    <p>Est. Autumn 2013</p>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+</script>
+</body>
+</html>
