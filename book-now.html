@@ -220,28 +220,95 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: 0;
       background: white;
       z-index: 1;
       pointer-events: none;
-      transition: opacity 0.4s;
+      transition: opacity 0.6s ease;
     }
     .vagaro-loading.hidden { opacity: 0; }
 
-    .spinner {
-      width: 36px; height: 36px;
-      border: 2px solid var(--lavender-lt);
-      border-top-color: var(--lavender-dk);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+    /* Row with sparkles framing the text */
+    .sparkle-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Each side sparkle cluster */
+    .sparkle-side {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Main 4-point star */
+    .sparkle-main {
+      width: 22px;
+      height: 22px;
+      animation: sparklePulse 1.8s ease-in-out infinite;
+    }
+    .sparkle-main svg { width: 100%; height: 100%; }
+
+    @keyframes sparklePulse {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.25) rotate(18deg); opacity: 0.7; }
+    }
+
+    /* Floating mini dots around the star */
+    .sparkle-dot {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatSpark 2.4s ease-in-out infinite;
+    }
+    .sparkle-dot.s1 { width: 5px; height: 5px; background: #c4adc8; top: 4px; left: 6px; animation-delay: 0s; }
+    .sparkle-dot.s2 { width: 3px; height: 3px; background: #9b82a0; top: 6px; right: 4px; animation-delay: 0.7s; }
+    .sparkle-dot.s3 { width: 4px; height: 4px; background: #e8dfe9; bottom: 5px; left: 10px; animation-delay: 1.2s; }
+    .sparkle-dot.s4 { width: 3px; height: 3px; background: #c4adc8; bottom: 8px; right: 6px; animation-delay: 0.4s; }
+
+    /* Mini star sparkle */
+    .sparkle-star {
+      position: absolute;
+      animation: starTwinkle 2.2s ease-in-out infinite;
+    }
+    .sparkle-star.st1 { top: 2px; right: 8px; animation-delay: 0.5s; }
+    .sparkle-star.st2 { bottom: 2px; left: 4px; animation-delay: 1.4s; }
+
+    /* Mirror delays for right side */
+    .sparkle-side.right .sparkle-dot.s1 { animation-delay: 0.3s; }
+    .sparkle-side.right .sparkle-dot.s2 { animation-delay: 1.0s; }
+    .sparkle-side.right .sparkle-dot.s3 { animation-delay: 0.6s; }
+    .sparkle-side.right .sparkle-dot.s4 { animation-delay: 1.6s; }
+    .sparkle-side.right .sparkle-main { animation-delay: 0.9s; }
+    .sparkle-side.right .sparkle-star.st1 { animation-delay: 1.1s; }
+    .sparkle-side.right .sparkle-star.st2 { animation-delay: 0.2s; }
+
+    @keyframes floatSpark {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-5px) scale(1.4); opacity: 1; }
+    }
+    @keyframes starTwinkle {
+      0%, 100% { transform: scale(0.5) rotate(0deg); opacity: 0.2; }
+      50% { transform: scale(1) rotate(20deg); opacity: 0.85; }
+    }
 
     .vagaro-loading p {
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gray-mid);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--lavender-dk);
+      white-space: nowrap;
+      animation: textFade 1.8s ease-in-out infinite;
+    }
+    @keyframes textFade {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
     }
 
     .vagaro-iframe {
@@ -454,21 +521,63 @@
   <!-- Vagaro Embed -->
   <div class="vagaro-wrap" id="vagaroWrap">
     <div class="vagaro-loading" id="vagaroLoading">
-      <div class="spinner"></div>
-      <p>Loading booking calendar…</p>
+      <div class="sparkle-row">
+
+        <!-- LEFT sparkle cluster -->
+        <div class="sparkle-side left">
+          <div class="sparkle-dot s1"></div>
+          <div class="sparkle-dot s2"></div>
+          <div class="sparkle-dot s3"></div>
+          <div class="sparkle-dot s4"></div>
+          <div class="sparkle-star st1">
+            <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+              <path d="M5 0 L5.6 4.4 L10 5 L5.6 5.6 L5 10 L4.4 5.6 L0 5 L4.4 4.4 Z" fill="#c4adc8"/>
+            </svg>
+          </div>
+          <div class="sparkle-star st2">
+            <svg width="7" height="7" viewBox="0 0 10 10" fill="none">
+              <path d="M5 0 L5.6 4.4 L10 5 L5.6 5.6 L5 10 L4.4 5.6 L0 5 L4.4 4.4 Z" fill="#9b82a0"/>
+            </svg>
+          </div>
+          <div class="sparkle-main">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 0 C20 0 21.5 14 26 20 C21.5 26 20 40 20 40 C20 40 18.5 26 14 20 C18.5 14 20 0 20 0Z" fill="#c4adc8"/>
+              <path d="M0 20 C0 20 14 18.5 20 14 C26 18.5 40 20 40 20 C40 20 26 21.5 20 26 C14 21.5 0 20 0 20Z" fill="#9b82a0"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- TEXT -->
+        <p>Good hair is on the way…</p>
+
+        <!-- RIGHT sparkle cluster (mirrored) -->
+        <div class="sparkle-side right">
+          <div class="sparkle-dot s1"></div>
+          <div class="sparkle-dot s2"></div>
+          <div class="sparkle-dot s3"></div>
+          <div class="sparkle-dot s4"></div>
+          <div class="sparkle-star st1">
+            <svg width="7" height="7" viewBox="0 0 10 10" fill="none">
+              <path d="M5 0 L5.6 4.4 L10 5 L5.6 5.6 L5 10 L4.4 5.6 L0 5 L4.4 4.4 Z" fill="#9b82a0"/>
+            </svg>
+          </div>
+          <div class="sparkle-star st2">
+            <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+              <path d="M5 0 L5.6 4.4 L10 5 L5.6 5.6 L5 10 L4.4 5.6 L0 5 L4.4 4.4 Z" fill="#c4adc8"/>
+            </svg>
+          </div>
+          <div class="sparkle-main">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 0 C20 0 21.5 14 26 20 C21.5 26 20 40 20 40 C20 40 18.5 26 14 20 C18.5 14 20 0 20 0Z" fill="#9b82a0"/>
+              <path d="M0 20 C0 20 14 18.5 20 14 C26 18.5 40 20 40 20 C40 20 26 21.5 20 26 C14 21.5 0 20 0 20Z" fill="#c4adc8"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <iframe
-      id="vagaroFrame"
-      class="vagaro-iframe"
-      src="https://www.vagaro.com/curlkitchensalon/services"
-      title="Curl Kitchen Salon — Book an Appointment"
-      allowfullscreen
-      loading="lazy"
-    ></iframe>
-    <!-- Fallback shown if iframe is blocked -->
-    <div class="vagaro-fallback" id="vagaroFallback">
-      <p>Our booking calendar couldn't load inline.<br>Click below to open it directly on Vagaro.</p>
-      <a href="https://www.vagaro.com/curlkitchensalon/services" target="_blank" class="btn-black">Open Booking on Vagaro →</a>
+    <div id="vagaroEmbed" style="width:100%; padding: 20px 0;">
+      <div class="vagaro" style="width:100%; max-width:100%; padding:0; border:0; margin:0 auto; text-align:center;"><style>.vagaro a {font-size:14px; color:#9b82a0; text-decoration:none;}</style><a href="https://www.vagaro.com/pro/">Powered by Vagaro</a>&nbsp;<a href="https://www.vagaro.com/pro/salon-software">Salon Software</a>,&nbsp;<a href="https://www.vagaro.com/pro/spa-software">Spa Software</a>&nbsp;&amp;&nbsp;<a href="https://www.vagaro.com/pro/fitness-software">Fitness Software</a><script type="text/javascript" src="https://www.vagaro.com//resources/WidgetEmbeddedLoader/OZqnCpSoC3ScT3qmV35y6JuPlXez3Py79oz34mC2PeFJ4mC30m9cyUeJUtjP0dDxkJEvwRapWUgZawifCs7fYJEPwMc8?v=eU06kXSmGAHchGIFq94xDdPxdNcOC7xO2IonaWBIN9W#"></script></div>
     </div>
   </div>
 
@@ -554,33 +663,12 @@
 
 <script>
   // Hide spinner once iframe loads
-  const frame = document.getElementById('vagaroFrame');
   const loading = document.getElementById('vagaroLoading');
-  const fallback = document.getElementById('vagaroFallback');
 
-  frame.addEventListener('load', () => {
-    loading.classList.add('hidden');
-    // Check if iframe loaded real content (some browsers block cross-origin check)
-    try {
-      const doc = frame.contentDocument || frame.contentWindow.document;
-      if (!doc || doc.body.innerHTML === '') {
-        frame.style.display = 'none';
-        fallback.style.display = 'block';
-      }
-    } catch(e) {
-      // Cross-origin — assume it loaded fine (Vagaro allows embedding)
-      loading.classList.add('hidden');
-    }
-  });
-
-  // Show fallback after 10s if still loading
+  // Hide spinner once Vagaro widget script has had time to load
   setTimeout(() => {
-    if (!loading.classList.contains('hidden')) {
-      frame.style.display = 'none';
-      loading.style.display = 'none';
-      fallback.style.display = 'block';
-    }
-  }, 10000);
+    loading.classList.add('hidden');
+  }, 2500);
 </script>
 
 </body>
