@@ -240,6 +240,38 @@
     }
     .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
 
+    .hero-quiz-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      background: rgba(196,173,200,0.15);
+      border: 1px solid rgba(196,173,200,0.40);
+      color: var(--lavender-lt);
+      padding: 11px 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      backdrop-filter: blur(6px);
+    }
+    .hero-quiz-link:hover {
+      background: rgba(196,173,200,0.28);
+      border-color: var(--lavender);
+      color: white;
+    }
+    .hero-quiz-link .quiz-badge {
+      background: var(--lavender);
+      color: var(--off-black);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      flex-shrink: 0;
+    }
+
     .hero-rating {
       position: absolute;
       bottom: 40px;
@@ -613,29 +645,84 @@
     .footer-bottom p { font-size: 0.7rem; letter-spacing: 0.06em; }
 
     /* RESPONSIVE */
+    /* ── TABLET (960px) ── */
     @media (max-width: 960px) {
       nav { padding: 0 24px; }
       .nav-links { gap: 20px; }
       .hero-content { padding: 0 24px; }
-      .hero-rating { right: 24px; }
       .about, .location { grid-template-columns: 1fr; }
-      .about-img-wrap { height: 320px; }
-      .location-img { min-height: 300px; order: -1; }
-      .about-text, .location-text { padding: 56px 32px; }
-      .services-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto 40px; }
+      .about-img-wrap { height: 300px; }
+      .location-img { min-height: 280px; order: -1; }
+      .about-text, .location-text { padding: 52px 32px; }
+      .services-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto 40px; }
       .pillars { grid-template-columns: 1fr; }
       .pillar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 40px 32px; }
       .reviews-wrap { grid-template-columns: 1fr; }
-      .loc-cols { grid-template-columns: 1fr; gap: 28px; }
+      .loc-cols { grid-template-columns: 1fr; gap: 24px; }
       .footer-top { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 600px) {
-      nav { padding: 0 20px; }
+
+    /* ── MOBILE (480px) ── */
+    @media (max-width: 480px) {
+      /* Nav */
+      nav { padding: 0 16px; height: 60px; }
+      .nav-logo img { height: 36px; }
+      .nav-links { gap: 10px; }
       .nav-links .hide-sm { display: none; }
-      .strip { padding: 14px 20px; gap: 16px; }
-      .services, .testimonials, .cta { padding: 64px 24px; }
-      footer { padding: 48px 24px 28px; }
-      .footer-top { grid-template-columns: 1fr; }
+      .nav-book { padding: 8px 16px; font-size: 0.65rem; }
+
+      /* Hero */
+      .hero { min-height: 100svh; }
+      .hero-content { padding: 0 20px; }
+      .hero-eyebrow { font-size: 0.58rem; padding: 5px 12px; }
+      .hero-title { font-size: 2.6rem; }
+      .hero-sub { font-size: 0.82rem; }
+      .hero-ctas { flex-direction: column; gap: 10px; }
+      .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 14px 20px; }
+
+      /* Strip */
+      .strip { padding: 12px 16px; gap: 12px; justify-content: center; }
+      .strip-item { font-size: 0.6rem; letter-spacing: 0.12em; }
+      .strip-dot { display: none; }
+
+      /* About */
+      .about-text { padding: 40px 20px; }
+      .about-text p { font-size: 0.85rem; }
+      .about-pills { gap: 6px; }
+      .pill { font-size: 0.6rem; padding: 6px 12px; }
+
+      /* Services */
+      .services { padding: 52px 20px; }
+      .section-head { margin-bottom: 36px; }
+      .svc-card { aspect-ratio: 3/3.5; }
+      .svc-title { font-size: 1.4rem; }
+
+      /* Pillars */
+      .pillar { padding: 36px 20px; }
+      .pillar h3 { font-size: 1.1rem; }
+
+      /* Testimonials */
+      .testimonials { padding: 52px 20px; }
+      .review { padding: 28px 20px; }
+      .review-text { font-size: 0.82rem; }
+
+      /* Gallery */
+      .gallery-section { padding-top: 52px; }
+      .gallery-item { width: 200px; height: 260px; }
+      .gallery-cta { padding: 28px 20px; }
+
+      /* Location */
+      .location-text { padding: 40px 20px; }
+      .location-text .sub-text { margin-bottom: 28px; }
+
+      /* CTA */
+      .cta { padding: 64px 20px; }
+      .btn-lavender { padding: 15px 32px; width: 100%; text-align: center; }
+
+      /* Footer */
+      footer { padding: 44px 20px 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
     }
   </style>
 </head>
@@ -666,6 +753,9 @@
       <a href="book-now.html" class="btn-primary">Book Appointment</a>
       <a href="services.html" class="btn-outline">View Services</a>
     </div>
+    <a href="hair-quiz.html" class="hero-quiz-link">
+      Not sure what service to get? Take our hair quiz →
+    </a>
   </div>
 </section>
 
@@ -771,7 +861,7 @@
       <div class="review-stars">★★★★★</div>
       <p class="review-text">Airikah is the best stylist there and I have never felt as comfortable with anyone as I do with my hair. From the first moment I sat in her chair I realized she had growing hands. Her energy is truly unmatched — always so uplifting. Definitely found my long-term stylist.</p>
       <p class="review-author">Jasmine I.</p>
-      <p class="review-platform">Verified · Vagaro · Aug 2024</p>
+      <p class="review-platform">Verified · Vagaro</p>
     </div>
     <div class="review">
       <div class="review-quote">"</div>
@@ -783,9 +873,9 @@
     <div class="review">
       <div class="review-quote">"</div>
       <div class="review-stars">★★★★★</div>
-      <p class="review-text">Jasmine is absolutely the best! She takes her time and knows what she is doing!</p>
-      <p class="review-author">Lola M.</p>
-      <p class="review-platform">Verified · Vagaro · May 2022</p>
+      <p class="review-text">Breiana gave me a silk press and cut, the service was great. I have been natural for the last 8 years and Breiana asked all the right questions to help get my hair healthy for the next step in my natural hair journey. I appreciated the suggestions for products I can start using. I will definitely be returning.</p>
+      <p class="review-author">Lesley G.</p>
+      <p class="review-platform">Verified · Vagaro</p>
     </div>
   </div>
 </section>
@@ -798,22 +888,51 @@
   </div>
   <div class="gallery-track-outer">
     <div class="gallery-track">
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_baa0f301787d47a984d7d51f8dab20bf~mv2.png/v1/fill/w_534,h_534,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_51_06%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_863d861213e44a36857636063fc3f0d3~mv2.png/v1/fill/w_537,h_537,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_52_05%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_af0aa84458e446adb4458755c6b491f1~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_50_31%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_620206483a68403ba1d5790d7b5d36f5~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_55_11%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_cb7f6e080c924335bb70679dc47b811e~mv2.png/v1/fill/w_800,h_800,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/cksservicepic2.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_c56e59a239e94f89b445e7bfd12c5669~mv2.jpg/v1/crop/x_1919,y_0,w_1517,h_1517/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/shutterstock_475174225.jpg" alt="Curl Kitchen work" /></div>
-      <!-- duplicates for loop -->
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_baa0f301787d47a984d7d51f8dab20bf~mv2.png/v1/fill/w_534,h_534,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_51_06%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_863d861213e44a36857636063fc3f0d3~mv2.png/v1/fill/w_537,h_537,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_52_05%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_af0aa84458e446adb4458755c6b491f1~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_50_31%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_620206483a68403ba1d5790d7b5d36f5~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Screen%20Shot%202020-01-09%20at%201_55_11%20PM.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_cb7f6e080c924335bb70679dc47b811e~mv2.png/v1/fill/w_800,h_800,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/cksservicepic2.png" alt="Curl Kitchen work" /></div>
-      <div class="gallery-item"><img src="https://static.wixstatic.com/media/e57add_c56e59a239e94f89b445e7bfd12c5669~mv2.jpg/v1/crop/x_1919,y_0,w_1517,h_1517/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/shutterstock_475174225.jpg" alt="Curl Kitchen work" /></div>
+      <div class="gallery-item"><img src="carousel/image0.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image1.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image2.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image3.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image4.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image5.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image6.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image7.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image8.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image9.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image10.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image11.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image12.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image13.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image14.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image15.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image16.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image17.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image18.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image19.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image20.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image0.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image1.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image2.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image3.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image4.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image5.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image6.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image7.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image8.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image9.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image10.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image11.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image12.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image13.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image14.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image15.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image16.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image17.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image18.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image19.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
+      <div class="gallery-item"><img src="carousel/image20.jpg" alt="Curl Kitchen salon work" loading="lazy" /></div>
     </div>
-  </div>
-  <div class="gallery-cta">
+    </div>
+    <div class="gallery-cta">
     <a href="https://www.instagram.com/curlkitchensalon/" target="_blank" class="btn-black">Follow on Instagram</a>
   </div>
 </section>
