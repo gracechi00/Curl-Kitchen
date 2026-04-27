@@ -995,7 +995,7 @@
       recommendation: document.getElementById('result-title').textContent,
     });
     // sendBeacon fires even as the page navigates away
-    navigator.sendBeacon(WEBAPP_URL, new Blob([payload], { type: 'application/json' }));
+    navigator.sendBeacon(WEBAPP_URL, new Blob([payload], { type: 'text/plain' }));
   }
 
   // ── Save response to Google Sheets ──────
@@ -1024,7 +1024,7 @@
     fetch(WEBAPP_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload),
     }).catch(() => {}); // silent fail — don't block the user
   }
