@@ -8,13 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <meta name="description" content="Explore Curl Kitchen Salon's services menu — silk press, rod sets, wash & go, hair color, cuts, locs and extensions. Steam treatment and trim included with every service." />
-  <meta name="keywords" content="silk press Chicago, rod set natural hair, wash and go Chicago, hair color natural hair, loc retwist Chicago, natural hair services Chicago" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.curlkitchensalon.com/services" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Services & Pricing | Curl Kitchen Salon" />
-  <meta property="og:description" content="Full services menu for Curl Kitchen Salon in Chicago. Silk press, hair color, cuts, locs and more. Steam treatment included with every service." />
-  <meta property="og:url" content="https://www.curlkitchensalon.com/services" />
 
   <style>
     :root {
@@ -33,7 +28,6 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--black); overflow-x: hidden; }
 
-    /* NAV */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 52px; background: rgba(255,255,255,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
     .nav-logo { display: flex; align-items: center; text-decoration: none; }
     .nav-logo img { height: 44px; width: auto; object-fit: contain; }
@@ -44,7 +38,6 @@
     .nav-book { background: var(--black) !important; color: var(--white) !important; padding: 10px 26px; transition: background 0.25s !important; }
     .nav-book:hover { background: var(--lavender-dk) !important; }
 
-    /* PAGE HEADER */
     .page-header { padding-top: 68px; background: var(--black); text-align: center; position: relative; overflow: hidden; }
     .page-header::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(196,173,200,0.10) 0%, transparent 70%); pointer-events: none; }
     .page-header-inner { padding: 60px 52px 56px; position: relative; z-index: 1; }
@@ -55,20 +48,20 @@
     .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; font-style: italic; color: var(--white); margin-bottom: 12px; }
     .page-header p { font-size: 0.88rem; color: rgba(255,255,255,0.50); max-width: 480px; margin: 0 auto; line-height: 1.75; }
 
-    /* FULL MENU BANNER */
     .full-menu-banner {
       background: var(--lavender-lt);
       border-bottom: 1px solid var(--lavender);
-      padding: 18px 52px;
-      text-align: center;
+      padding: 24px 52px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 10px;
+      text-align: center;
     }
+    .full-menu-banner-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
     .full-menu-banner p { font-size: 0.82rem; color: var(--off-black); }
-    .full-menu-banner a {
+    .full-menu-banner a.menu-link {
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.14em;
@@ -80,16 +73,69 @@
       transition: background 0.2s, color 0.2s;
       white-space: nowrap;
     }
-    .full-menu-banner a:hover { background: var(--lavender-dk); color: white; }
+    .full-menu-banner a.menu-link:hover { background: var(--lavender-dk); color: white; }
+    .banner-divider { display: none; }
+    .full-menu-banner a.quiz-link {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--lavender-dk);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .full-menu-banner a.quiz-link:hover { color: var(--black); }
+    .full-menu-banner a.quiz-link::before { content: '✦'; font-size: 0.55rem; color: var(--lavender-dk); }
 
-    /* CATEGORY TABS */
-    .tabs-bar { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 68px; z-index: 50; overflow-x: auto; }
-    .tabs-inner { display: flex; justify-content: center; gap: 0; padding: 0 52px; min-width: max-content; margin: 0 auto; }
+    .quiz-callout {
+      background: var(--black);
+      padding: 28px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .quiz-callout-text { display: flex; align-items: center; gap: 16px; }
+    .quiz-callout-badge {
+      background: var(--lavender);
+      color: var(--off-black);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      flex-shrink: 0;
+    }
+    .quiz-callout-msg { font-size: 0.84rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
+    .quiz-callout-msg strong { color: var(--white); font-weight: 600; }
+    .btn-quiz {
+      background: var(--lavender);
+      color: var(--off-black);
+      padding: 12px 28px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .btn-quiz:hover { background: var(--lavender-dk); color: white; }
+
+    @media (max-width: 600px) {
+      .quiz-callout { padding: 20px 20px; flex-direction: column; align-items: flex-start; gap: 16px; }
+      .btn-quiz { width: 100%; text-align: center; }
+    }
+    .tabs-inner { display: flex; justify-content: center; padding: 0 52px; min-width: max-content; margin: 0 auto; }
     .tab-btn { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-mid); background: none; border: none; cursor: pointer; padding: 18px 28px; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; white-space: nowrap; }
     .tab-btn:hover { color: var(--black); }
     .tab-btn.active { color: var(--black); border-bottom-color: var(--lavender-dk); }
 
-    /* CONTENT */
     .services-content { max-width: 860px; margin: 0 auto; padding: 52px 24px 80px; }
 
     .category { display: none; animation: fadeIn 0.3s ease; }
@@ -100,45 +146,35 @@
     .category-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; color: var(--black); margin-bottom: 8px; }
     .category-header p { font-size: 0.86rem; color: var(--gray-mid); line-height: 1.7; max-width: 520px; }
 
-    /* STEAM BADGE */
     .steam-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--black); color: var(--lavender-lt); padding: 9px 18px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 28px; }
 
-    /* PRICE NOTE */
     .price-note { font-size: 0.76rem; color: var(--off-black); line-height: 1.7; padding: 14px 18px; background: var(--lavender-lt); border-left: 3px solid var(--lavender); margin-bottom: 24px; }
     .price-note strong { font-weight: 600; }
 
-    /* SERVICE LIST */
     .service-list { border-top: 1px solid var(--border); margin-bottom: 36px; }
-    .service-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+    .service-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--border); }
     .service-name { font-size: 0.92rem; font-weight: 500; color: var(--black); line-height: 1.4; }
     .service-note { font-size: 0.74rem; color: var(--gray-mid); margin-top: 3px; font-weight: 400; }
     .service-price { font-size: 0.9rem; font-weight: 600; color: var(--black); white-space: nowrap; text-align: right; }
     .service-price.range { font-size: 0.82rem; }
     .service-price.consult { font-size: 0.75rem; font-weight: 500; color: var(--gray-mid); }
 
-    .btn-book-sm { background: var(--lavender); color: var(--off-black); padding: 8px 18px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; display: inline-block; white-space: nowrap; transition: background 0.2s, color 0.2s; }
-    .btn-book-sm:hover { background: var(--lavender-dk); color: white; }
-
-    /* ADD-ONS */
     .addon-section { margin-top: 8px; margin-bottom: 36px; }
     .addon-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lavender-dk); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--lavender-lt); }
     .addon-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-lt); gap: 16px; }
     .addon-name { font-size: 0.82rem; color: var(--off-black); }
     .addon-price { font-size: 0.82rem; font-weight: 600; color: var(--black); white-space: nowrap; }
 
-    /* BIG BOOK CTA */
     .category-cta { margin-top: 4px; }
     .btn-black { background: var(--black); color: white; padding: 14px 38px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.2s; }
     .btn-black:hover { background: var(--lavender-dk); }
 
-    /* CTA STRIP */
     .cta-strip { background: var(--lavender); padding: 56px 52px; text-align: center; }
     .cta-strip h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 400; font-style: italic; color: var(--off-black); margin-bottom: 10px; }
     .cta-strip p { font-size: 0.84rem; color: rgba(28,28,28,0.6); margin-bottom: 28px; }
     .btn-dark { background: var(--black); color: white; padding: 14px 40px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.2s; }
     .btn-dark:hover { background: var(--off-black); }
 
-    /* FOOTER */
     footer { background: #0d0d0d; padding: 64px 52px 32px; color: rgba(255,255,255,0.45); }
     .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.07); }
     .footer-brand img { height: 48px; object-fit: contain; margin-bottom: 20px; display: block; filter: brightness(0) invert(1); opacity: 0.85; }
@@ -155,27 +191,71 @@
     .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
     .footer-bottom p { font-size: 0.7rem; letter-spacing: 0.06em; }
 
+    /* ── TABLET ── */
     @media (max-width: 768px) {
       nav { padding: 0 24px; }
       .nav-links .hide-sm { display: none; }
       .page-header-inner { padding: 40px 24px 44px; }
-      .full-menu-banner { padding: 16px 24px; }
-      .tabs-inner { padding: 0 16px; }
-      .tab-btn { padding: 16px 14px; font-size: 0.6rem; }
-      .service-item { grid-template-columns: 1fr auto; gap: 10px; }
-      .btn-book-sm { display: none; }
+      .full-menu-banner { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+      .banner-divider { display: none; }
+      .tabs-inner { padding: 0 12px; justify-content: flex-start; }
+      .tab-btn { padding: 16px 14px; font-size: 0.6rem; letter-spacing: 0.1em; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
       .cta-strip { padding: 48px 24px; }
       footer { padding: 48px 24px 28px; }
     }
+
+    /* ── MOBILE ── */
     @media (max-width: 480px) {
-      .footer-top { grid-template-columns: 1fr; }
+      nav { padding: 0 16px; height: 60px; }
+      .nav-logo img { height: 36px; }
+      .nav-links { gap: 10px; }
+      .nav-book { padding: 8px 16px; font-size: 0.65rem; }
+
+      .page-header-inner { padding: 32px 20px 36px; }
+      .page-header h1 { font-size: 1.8rem; }
+
+      .full-menu-banner { padding: 14px 16px; }
+      .full-menu-banner a { font-size: 0.65rem; padding: 8px 14px; width: 100%; text-align: center; }
+
+      /* Tabs scroll horizontally */
+      .tabs-bar { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .tabs-inner { padding: 0 8px; min-width: max-content; justify-content: flex-start; }
+      .tab-btn { padding: 14px 12px; font-size: 0.58rem; letter-spacing: 0.08em; }
+
+      .services-content { padding: 36px 16px 64px; }
+      .steam-badge { font-size: 0.58rem; padding: 8px 14px; }
+
+      .category-header h2 { font-size: 1.5rem; }
+      .category-header p { font-size: 0.82rem; }
+
+      .price-note { font-size: 0.72rem; padding: 12px 14px; }
+
+      /* Service items stack cleanly */
+      .service-item { grid-template-columns: 1fr auto; gap: 12px; padding: 14px 0; }
+      .service-name { font-size: 0.86rem; }
+      .service-note { font-size: 0.7rem; }
+      .service-price { font-size: 0.86rem; }
+      .service-price.range { font-size: 0.78rem; }
+
+      .addon-name { font-size: 0.78rem; }
+      .addon-price { font-size: 0.78rem; }
+      .addon-item { padding: 8px 0; }
+
+      .btn-black { width: 100%; text-align: center; padding: 14px 20px; }
+
+      .cta-strip { padding: 48px 20px; }
+      .cta-strip h2 { font-size: 1.6rem; }
+      .btn-dark { width: 100%; text-align: center; }
+
+      footer { padding: 44px 20px 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 6px; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
     <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
@@ -188,7 +268,6 @@
   </ul>
 </nav>
 
-<!-- PAGE HEADER -->
 <div class="page-header">
   <div class="page-header-inner">
     <div class="breadcrumb">
@@ -201,13 +280,15 @@
   </div>
 </div>
 
-<!-- FULL MENU BANNER -->
 <div class="full-menu-banner">
-  <p>Want to see everything we offer?</p>
-  <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank">Explore our full service menu &amp; book your appointment →</a>
+  <div class="full-menu-banner-left">
+    <p>Want to see everything we offer?</p>
+    <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="menu-link">Explore full menu &amp; book →</a>
+  </div>
+  <div class="banner-divider"></div>
+  <a href="hair-quiz.html" class="quiz-link">Not sure what to get? Take our hair quiz</a>
 </div>
 
-<!-- CATEGORY TABS -->
 <div class="tabs-bar">
   <div class="tabs-inner">
     <button class="tab-btn active" onclick="showCategory('silkpress', this)">Silk Press &amp; Blowout</button>
@@ -218,42 +299,66 @@
   </div>
 </div>
 
-<!-- SERVICES CONTENT -->
 <div class="services-content">
 
   <div class="steam-badge">✦ Steam treatment &amp; trim included with every service</div>
 
-  <!-- SILK PRESS & BLOWOUT -->
+  <!-- ── SILK PRESS & BLOWOUT ─────────────────── -->
   <div class="category active" id="cat-silkpress">
     <div class="category-header">
       <h2>Silk Press &amp; Blowout</h2>
-      <p>Sleek, smooth finishes using heat protection that honor your natural curl underneath. Prices vary by hair length.</p>
+      <p>Sleek, smooth finishes using heat protection that honor your natural curl. Prices vary by hair length.</p>
     </div>
-    <div class="price-note"><strong>Shoulder length &amp; shorter / Bra strap length / Waist length.</strong> Select your length when booking on Vagaro.</div>
+    <div class="price-note"><strong>Length tiers: Shoulder &amp; shorter / Bra strap / Waist.</strong> Select your length when booking.</div>
     <div class="service-list">
       <div class="service-item">
         <div>
-          <div class="service-name">Silkpress (Blowdry + Flat Iron)</div>
-          <div class="service-note">Shoulder &amp; shorter / Bra strap / Waist length</div>
+          <div class="service-name">Silkpress — Shoulder Length &amp; Shorter</div>
+          <div class="service-note">Blowdry + flat iron</div>
         </div>
-        <div class="service-price range">$85 / $100 / $105</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$85</div>
       </div>
       <div class="service-item">
         <div>
-          <div class="service-name">Blowout (Blowdry — No Flat Iron)</div>
-          <div class="service-note">Shoulder &amp; shorter / Bra strap / Waist length</div>
+          <div class="service-name">Silkpress — Bra Strap Length</div>
+          <div class="service-note">Blowdry + flat iron</div>
         </div>
-        <div class="service-price range">$70 / $75 / $85</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$100</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Silkpress — Waist Length</div>
+          <div class="service-note">Blowdry + flat iron</div>
+        </div>
+        <div class="service-price">$105</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Blowout — Shoulder Length &amp; Shorter</div>
+          <div class="service-note">Blowdry, no flat iron</div>
+        </div>
+        <div class="service-price">$70</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Blowout — Bra Strap Length</div>
+          <div class="service-note">Blowdry, no flat iron</div>
+        </div>
+        <div class="service-price">$75</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Blowout — Waist Length</div>
+          <div class="service-note">Blowdry, no flat iron</div>
+        </div>
+        <div class="service-price">$85</div>
       </div>
       <div class="service-item">
         <div>
           <div class="service-name">Protective Style Recovery — Silkpress</div>
-          <div class="service-note">For hair coming out of a protective style. Bra strap length.</div>
+          <div class="service-note">For hair transitioning out of a protective style · Bra strap length</div>
         </div>
         <div class="service-price">$125</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
@@ -261,37 +366,41 @@
           <div class="service-note">Bra strap / Waist length</div>
         </div>
         <div class="service-price range">$95 / $105</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
     </div>
     <div class="category-cta">
-      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-black">Book a Silk Press or Blowout</a>
+      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDodU4MdLSG/QmgXc/++bIbtqp0gNvRUmHLEdf97NNjKnPXANRKdvUX6J4UctOGf8ojKaf1TdXba1qmXJ2Zq9x86" target="_blank" class="btn-black">Book a Silk Press or Blowout</a>
     </div>
   </div>
 
-  <!-- NATURAL SETS -->
+  <!-- ── NATURAL SETS ────────────────────────── -->
   <div class="category" id="cat-natural">
     <div class="category-header">
       <h2>Natural Sets</h2>
       <p>Curl-enhancing styles that work with your natural texture. Prices vary by size and length.</p>
     </div>
-    <div class="price-note"><strong>Size options: Large / Medium / Small.</strong> Bra strap pricing listed where applicable.</div>
+    <div class="price-note"><strong>Size options: Large / Medium / Small.</strong> Bra strap pricing applies where noted.</div>
     <div class="service-list">
       <div class="service-item">
         <div>
           <div class="service-name">Wash &amp; Go</div>
-          <div class="service-note">Cleanse, condition &amp; curl definition.</div>
+          <div class="service-note">Cleanse, condition &amp; curl definition</div>
         </div>
         <div class="service-price">$80</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
-          <div class="service-name">Rod Set</div>
-          <div class="service-note">Large / Medium</div>
+          <div class="service-name">Rod Set — Large</div>
+          <div class="service-note">Perm rod set for bouncy, defined curls</div>
         </div>
-        <div class="service-price range">$95 / $110</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$95</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Rod Set — Medium</div>
+          <div class="service-note">Perm rod set for bouncy, defined curls</div>
+        </div>
+        <div class="service-price">$110</div>
       </div>
       <div class="service-item">
         <div>
@@ -299,31 +408,56 @@
           <div class="service-note">Large / Medium / Small (bra strap pricing varies)</div>
         </div>
         <div class="service-price range">$110 – $150</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
-          <div class="service-name">Bantu Knots</div>
-          <div class="service-note">Large / Medium / Small</div>
+          <div class="service-name">Bantu Knots — Large</div>
+          <div class="service-note"></div>
         </div>
-        <div class="service-price range">$65 / $90 / $105</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$65</div>
       </div>
       <div class="service-item">
         <div>
-          <div class="service-name">Coils (Finger or Comb)</div>
-          <div class="service-note">Large / Medium / Small</div>
+          <div class="service-name">Bantu Knots — Medium</div>
+          <div class="service-note"></div>
         </div>
-        <div class="service-price range">$80 / $95 / $110</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$90</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Bantu Knots — Small</div>
+          <div class="service-note"></div>
+        </div>
+        <div class="service-price">$105</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Coils (Finger or Comb) — Large</div>
+          <div class="service-note"></div>
+        </div>
+        <div class="service-price">$80</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Coils (Finger or Comb) — Medium</div>
+          <div class="service-note"></div>
+        </div>
+        <div class="service-price">$95</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Coils (Finger or Comb) — Small</div>
+          <div class="service-note"></div>
+        </div>
+        <div class="service-price">$110</div>
       </div>
     </div>
     <div class="category-cta">
-      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-black">Book a Natural Set</a>
+      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDqy/Q1Tj5RVM5fuiyL6bwSSI6oqOo0HRLSQYG9thXYJ0/QIQH6v7voHQp4M4Ga1A9N7yXLEWYxEMfztwcC2405T" target="_blank" class="btn-black">Book a Natural Set</a>
     </div>
   </div>
 
-  <!-- COLOR & TREATMENTS -->
+  <!-- ── COLOR & TREATMENTS ─────────────────── -->
   <div class="category" id="cat-color">
     <div class="category-header">
       <h2>Color &amp; Treatments</h2>
@@ -333,61 +467,74 @@
       <div class="service-item">
         <div>
           <div class="service-name">Single Color</div>
-          <div class="service-note">Full all-over color application.</div>
+          <div class="service-note">Full all-over color application</div>
         </div>
         <div class="service-price">$160</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
-          <div class="service-name">Root Touch Up</div>
-          <div class="service-note">Level 1 / Level 2</div>
+          <div class="service-name">Root Touch Up — Level 1</div>
+          <div class="service-note"></div>
         </div>
-        <div class="service-price range">$110 / $130</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$110</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Root Touch Up — Level 2</div>
+          <div class="service-note"></div>
+        </div>
+        <div class="service-price">$130</div>
       </div>
       <div class="service-item">
         <div>
           <div class="service-name">Toner (Demi Permanent + Silkpress)</div>
-          <div class="service-note">Adds shine and dimension.</div>
+          <div class="service-note">Adds shine and dimension</div>
         </div>
         <div class="service-price">$120</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
-          <div class="service-name">Olaplex Treatment</div>
-          <div class="service-note">Shoulder length / Bra strap length &amp; longer</div>
+          <div class="service-name">Olaplex Treatment — Shoulder Length</div>
+          <div class="service-note">Strengthening &amp; bonding treatment</div>
         </div>
-        <div class="service-price range">$115 / $130</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$115</div>
       </div>
       <div class="service-item">
         <div>
-          <div class="service-name">Olaplex Moisture Mask</div>
-          <div class="service-note">Shoulder length / Bra strap length &amp; longer</div>
+          <div class="service-name">Olaplex Treatment — Bra Strap &amp; Longer</div>
+          <div class="service-note">Strengthening &amp; bonding treatment</div>
         </div>
-        <div class="service-price range">$115 / $130</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$130</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Olaplex Moisture Mask — Shoulder Length</div>
+          <div class="service-note">Deep hydration mask</div>
+        </div>
+        <div class="service-price">$115</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Olaplex Moisture Mask — Bra Strap &amp; Longer</div>
+          <div class="service-note">Deep hydration mask</div>
+        </div>
+        <div class="service-price">$130</div>
       </div>
       <div class="service-item">
         <div>
           <div class="service-name">Peppermint &amp; Aloe Soothing Scalp Treatment</div>
-          <div class="service-note">Calms and nourishes the scalp.</div>
+          <div class="service-note">Calms and nourishes the scalp</div>
         </div>
         <div class="service-price">$115</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
           <div class="service-name">Smoothing Therapy Treatment</div>
-          <div class="service-note">Strengthening treatment + style.</div>
+          <div class="service-note">Strengthening treatment + style</div>
         </div>
         <div class="service-price">$195</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
     </div>
-    <!-- Add-ons -->
     <div class="addon-section">
       <div class="addon-label">Add-Ons</div>
       <div class="addon-item"><span class="addon-name">Olaplex Treatment Add-On</span><span class="addon-price">$30</span></div>
@@ -398,97 +545,104 @@
       <div class="addon-item"><span class="addon-name">Exfoliating Detox Treatment</span><span class="addon-price">$30</span></div>
     </div>
     <div class="category-cta">
-      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-black">Book a Color or Treatment</a>
+      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDrxOtbIn7HLsSI7edM6msm6SRSVWYZ6pzae/+zm+MraN8fPNxMjIWURE9WAzNXkoCjf6AsA9Z5jXrHwLVJjYTBN" target="_blank" class="btn-black">Book a Color or Treatment</a>
     </div>
   </div>
 
-  <!-- CUTS & EXTENSIONS -->
+  <!-- ── CUTS & EXTENSIONS ──────────────────── -->
   <div class="category" id="cat-cuts">
     <div class="category-header">
       <h2>Cuts &amp; Extensions</h2>
-      <p>Precision cuts and extension services. A trim is included with every service at Curl Kitchen.</p>
+      <p>Precision cuts and extension services. A trim is included with every service.</p>
     </div>
     <div class="service-list">
       <div class="service-item">
         <div>
           <div class="service-name">Bob or Lob</div>
-          <div class="service-note">Precision cut for shorter styles.</div>
+          <div class="service-note">Precision cut for shorter styles</div>
         </div>
         <div class="service-price">$100</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
           <div class="service-name">Quick Weave</div>
-          <div class="service-note">Full quick weave installation.</div>
+          <div class="service-note">Full quick weave installation</div>
         </div>
         <div class="service-price">$110</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
           <div class="service-name">Partial Sew-In with Leave-Out</div>
-          <div class="service-note">Natural hair left out for a blended look.</div>
+          <div class="service-note">Natural hair left out for a blended look</div>
         </div>
         <div class="service-price">$175</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
       <div class="service-item">
         <div>
           <div class="service-name">Full Sew-In with Minimal Leave-Out</div>
-          <div class="service-note">Full install with minimal leave-out.</div>
+          <div class="service-note">Full install with minimal leave-out</div>
         </div>
         <div class="service-price">$225</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
       </div>
     </div>
     <div class="addon-section">
       <div class="addon-label">Add-Ons</div>
       <div class="addon-item"><span class="addon-name">Basic Cut Add-On</span><span class="addon-price">$30</span></div>
     </div>
+    <div class="addon-section">
+      <div class="addon-label">Consultations</div>
+      <div class="addon-item"><span class="addon-name">Extension Consultation</span><span class="addon-price">$15</span></div>
+      <div class="addon-item"><span class="addon-name">Color Consultation</span><span class="addon-price">$15</span></div>
+      <div class="addon-item"><span class="addon-name">Healthy Hair Consultation</span><span class="addon-price">$15</span></div>
+    </div>
     <div class="category-cta">
-      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-black">Book a Cut or Extension</a>
+      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDo2fAZ1tdXabUXb6vXT3Gb3TlR2Hb2d/PnPp7Uxgtp2aaK4N9CxT41o2X16hneGhreejZxtYU0PElcsk3//NiMs" target="_blank" class="btn-black">Book a Cut or Extension</a>
     </div>
   </div>
 
-  <!-- LOCS -->
+  <!-- ── LOCS ───────────────────────────────── -->
   <div class="category" id="cat-locs">
     <div class="category-header">
       <h2>Locs</h2>
       <p>Professional loc retwist services. Pricing based on hair length.</p>
     </div>
-    <div class="price-note"><strong>Shoulder &amp; above / Mid back / Waist length.</strong> Select your length when booking.</div>
+    <div class="price-note"><strong>Length tiers: Shoulder &amp; above / Mid back / Waist.</strong> Select your length when booking.</div>
     <div class="service-list">
       <div class="service-item">
         <div>
-          <div class="service-name">Loc Retwist</div>
-          <div class="service-note">Shoulder &amp; above / Mid back / Waist length</div>
+          <div class="service-name">Loc Retwist — Shoulder &amp; Above</div>
+          <div class="service-note"></div>
         </div>
-        <div class="service-price range">$100 / $130 / $160</div>
-        <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-book-sm">Book</a>
+        <div class="service-price">$100</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Loc Retwist — Mid Back</div>
+          <div class="service-note"></div>
+        </div>
+        <div class="service-price">$130</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Loc Retwist — Waist Length</div>
+          <div class="service-note"></div>
+        </div>
+        <div class="service-price">$160</div>
       </div>
     </div>
-    <div class="addon-section">
-      <div class="addon-label">Consultations</div>
-      <div class="addon-item"><span class="addon-name">Healthy Hair Consultation</span><span class="addon-price">$15</span></div>
-      <div class="addon-item"><span class="addon-name">Extension Consultation</span><span class="addon-price">$15</span></div>
-      <div class="addon-item"><span class="addon-name">Color Consultation</span><span class="addon-price">$15</span></div>
-    </div>
     <div class="category-cta">
-      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpMZNszcCjSIJlXSPFTRD1/HUpgSn17+g52udIuzfGzS7gDaaHD/oa4qNUkZhGtrmE=" target="_blank" class="btn-black">Book a Loc Retwist</a>
+      <a href="https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDorZTKwRVuZcMioYOwoQHJVrtHy1HGI6qINJtiTYxF2PmtTfSNkHUq+zfTZ+DLZw6RGSs2VrWqkgednLoBj2iTH" target="_blank" class="btn-black">Book a Loc Retwist</a>
     </div>
   </div>
 
 </div>
 
-<!-- CTA STRIP -->
 <div class="cta-strip">
   <h2>Ready to book your appointment?</h2>
-  <p>Appointment only — no walk-ins, no double-booking, ever.</p>
+  <p>Appointment only — no walk-ins, ever.</p>
   <a href="book-now.html" class="btn-dark">Book Now</a>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-top">
     <div class="footer-brand">

@@ -461,19 +461,63 @@
     .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
     .footer-bottom p { font-size: 0.7rem; letter-spacing: 0.06em; }
 
+    /* ── TABLET ── */
     @media (max-width: 768px) {
       nav { padding: 0 24px; }
       .nav-links .hide-sm { display: none; }
       .page-header-inner { padding: 40px 24px 0; }
       .booking-wrap { padding: 40px 16px 60px; }
       .help-strip { padding: 24px; flex-direction: column; }
+      .help-strip-actions { width: 100%; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
       .cta-strip { padding: 48px 24px; }
       footer { padding: 48px 24px 28px; }
     }
-    @media (max-width: 500px) {
-      .footer-top { grid-template-columns: 1fr; }
-      .nav-links { gap: 16px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 480px) {
+      nav { padding: 0 16px; height: 60px; }
+      .nav-logo img { height: 36px; }
+      .nav-links { gap: 10px; }
+      .nav-book { padding: 8px 16px; font-size: 0.65rem; }
+
+      .page-header { padding-bottom: 40px; }
+      .page-header-inner { padding: 32px 20px 0; }
+      .page-header h1 { font-size: 1.8rem; }
+      .page-header p { font-size: 0.82rem; }
+      .breadcrumb { font-size: 0.62rem; }
+
+      .booking-wrap { padding: 28px 16px 52px; }
+
+      .booking-note { padding: 14px 16px; flex-direction: column; gap: 8px; }
+      .booking-note p { font-size: 0.8rem; }
+
+      /* Vagaro widget full width on mobile */
+      .vagaro-wrap { min-height: 600px; }
+      .vagaro-wrap .vagaro { width: 100% !important; }
+
+      /* Sparkle loading text sizing */
+      .sparkle-row { gap: 10px; }
+      .vagaro-loading p { font-size: 0.88rem; }
+      .sparkle-side { width: 36px; height: 36px; }
+      .sparkle-main { width: 18px; height: 18px; }
+
+      .policy-strip { padding: 16px 16px; }
+      .policy-strip p { font-size: 0.76rem; }
+
+      .help-strip { padding: 20px 16px; }
+      .help-strip-text h3 { font-size: 1rem; }
+      .help-strip-text p { font-size: 0.8rem; }
+      .help-strip-actions { flex-direction: column; gap: 8px; width: 100%; }
+      .btn-black, .btn-outline-dark { width: 100%; text-align: center; padding: 13px 20px; }
+
+      .cta-strip { padding: 48px 20px; }
+      .cta-strip h2 { font-size: 1.6rem; }
+      .btn-dark { width: 100%; text-align: center; }
+
+      footer { padding: 44px 20px 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 6px; }
     }
   </style>
 </head>

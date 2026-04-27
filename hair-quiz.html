@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hair Quiz | Curl Kitchen Salon Chicago</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <meta name="description" content="Take the Curl Kitchen Salon hair quiz to find the perfect service for your hair type, texture, and goals." />
+  <meta name="robots" content="index, follow" />
+
+  <style>
+    :root {
+      --black:      #111111;
+      --off-black:  #1c1c1c;
+      --white:      #ffffff;
+      --off-white:  #faf9f8;
+      --lavender:   #c4adc8;
+      --lavender-lt:#e8dfe9;
+      --lavender-dk:#9b82a0;
+      --gray-mid:   #888;
+      --border:     #e2dfe3;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--black); overflow-x: hidden; min-height: 100vh; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 52px; background: rgba(255,255,255,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 44px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+    .nav-links a { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--off-black); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--lavender-dk); }
+    .nav-book { background: var(--black) !important; color: var(--white) !important; padding: 10px 26px; transition: background 0.25s !important; }
+    .nav-book:hover { background: var(--lavender-dk) !important; }
+
+    /* PAGE HEADER */
+    .page-header { padding-top: 68px; background: var(--black); text-align: center; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(196,173,200,0.12) 0%, transparent 70%); pointer-events: none; }
+    .page-header-inner { padding: 52px 52px 48px; position: relative; z-index: 1; }
+    .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+    .breadcrumb a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--lavender); }
+    .breadcrumb span { color: var(--lavender); }
+    .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 400; font-style: italic; color: var(--white); margin-bottom: 10px; }
+    .page-header p { font-size: 0.88rem; color: rgba(255,255,255,0.50); max-width: 440px; margin: 0 auto; line-height: 1.75; }
+
+    /* QUIZ CONTAINER */
+    .quiz-wrap { max-width: 680px; margin: 0 auto; padding: 52px 24px 80px; }
+
+    /* PROGRESS BAR */
+    .progress-bar { margin-bottom: 40px; }
+    .progress-steps { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 12px; }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 700;
+      color: var(--gray-mid);
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .step-dot.active { border-color: var(--lavender-dk); background: var(--lavender-dk); color: white; }
+    .step-dot.done { border-color: var(--lavender); background: var(--lavender); color: var(--off-black); }
+    .step-line { flex: 1; height: 2px; background: var(--border); margin: 0 4px; transition: background 0.3s; max-width: 80px; }
+    .step-line.done { background: var(--lavender); }
+    .progress-label { text-align: center; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lavender-dk); }
+
+    /* STEP CARDS */
+    .step { display: none; animation: stepIn 0.35s ease; }
+    .step.active { display: block; }
+    @keyframes stepIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    .step-header { margin-bottom: 32px; }
+    .step-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; color: var(--black); margin-bottom: 8px; line-height: 1.25; }
+    .step-header p { font-size: 0.86rem; color: var(--gray-mid); line-height: 1.65; }
+
+    /* OPTION GRID */
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+    .options-grid.single { grid-template-columns: 1fr; }
+    .options-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+    .option-card {
+      border: 2px solid var(--border);
+      background: var(--white);
+      padding: 20px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      text-align: left;
+      position: relative;
+      user-select: none;
+    }
+    .option-card:hover { border-color: var(--lavender); transform: translateY(-1px); }
+    .option-card.selected { border-color: var(--lavender-dk); background: var(--lavender-lt); }
+    .option-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 10px; right: 12px;
+      width: 20px; height: 20px;
+      background: var(--lavender-dk);
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700;
+      line-height: 20px;
+      text-align: center;
+    }
+    .option-emoji { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+    .option-label { font-size: 0.88rem; font-weight: 600; color: var(--black); margin-bottom: 4px; display: block; }
+    .option-desc { font-size: 0.75rem; color: var(--gray-mid); line-height: 1.4; }
+
+    /* MULTI-SELECT NOTE */
+    .multi-note { font-size: 0.72rem; color: var(--lavender-dk); font-weight: 500; letter-spacing: 0.08em; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+    .multi-note::before { content: ''; display: block; width: 16px; height: 1px; background: var(--lavender-dk); }
+
+    /* EMAIL STEP */
+    .email-step-inner { background: var(--white); border: 1px solid var(--border); padding: 36px; margin-bottom: 32px; }
+    .email-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--off-black); margin-bottom: 10px; display: block; }
+    .email-input {
+      width: 100%;
+      border: 2px solid var(--border);
+      padding: 14px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--off-white);
+    }
+    .email-input:focus { border-color: var(--lavender-dk); background: var(--white); }
+    .email-input::placeholder { color: var(--gray-mid); }
+    .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .email-note { font-size: 0.72rem; color: var(--gray-mid); margin-top: 10px; line-height: 1.6; }
+
+    /* BUTTONS */
+    .btn-next {
+      background: var(--black);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .btn-next:hover { background: var(--lavender-dk); }
+    .btn-next:disabled { background: var(--border); color: var(--gray-mid); cursor: not-allowed; }
+    .btn-back {
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      cursor: pointer;
+      padding: 12px 0;
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin-top: 12px;
+      transition: color 0.2s;
+    }
+    .btn-back:hover { color: var(--black); }
+
+    /* RESULT */
+    .result { display: none; animation: stepIn 0.4s ease; }
+    .result.active { display: block; }
+
+    .result-card { background: var(--black); padding: 40px 36px; margin-bottom: 24px; position: relative; overflow: hidden; }
+    .result-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(196,173,200,0.15) 0%, transparent 70%); pointer-events: none; }
+    .result-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lavender); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .result-tag::before { content: '✦'; }
+    .result-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 600; color: var(--white); margin-bottom: 12px; line-height: 1.2; }
+    .result-price { font-size: 0.82rem; color: var(--lavender); font-weight: 500; margin-bottom: 18px; }
+    .result-desc { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 28px; }
+    .result-why { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+    .result-why-item { display: flex; align-items: flex-start; gap: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+    .result-why-item::before { content: '→'; color: var(--lavender); flex-shrink: 0; }
+    .btn-book-result {
+      background: var(--lavender);
+      color: var(--off-black);
+      padding: 16px 40px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-book-result:hover { background: var(--lavender-dk); color: white; }
+
+    .result-also { background: var(--white); border: 1px solid var(--border); padding: 28px 28px 24px; margin-bottom: 20px; }
+    .result-also h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--black); margin-bottom: 16px; }
+    .also-items { display: flex; flex-direction: column; gap: 10px; }
+    .also-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.84rem; gap: 12px; }
+    .also-item:last-child { border-bottom: none; }
+    .also-name { color: var(--off-black); font-weight: 500; }
+    .also-link { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lavender-dk); text-decoration: none; white-space: nowrap; }
+    .also-link:hover { color: var(--black); }
+
+    .retake-btn { display: block; text-align: center; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-mid); cursor: pointer; padding: 16px; transition: color 0.2s; background: none; border: none; font-family: 'DM Sans', sans-serif; width: 100%; }
+    .retake-btn:hover { color: var(--black); }
+
+    /* CTA STRIP */
+    .cta-strip { background: var(--lavender); padding: 56px 52px; text-align: center; }
+    .cta-strip h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 400; font-style: italic; color: var(--off-black); margin-bottom: 10px; }
+    .cta-strip p { font-size: 0.84rem; color: rgba(28,28,28,0.6); margin-bottom: 28px; }
+    .btn-dark { background: var(--black); color: white; padding: 14px 40px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: background 0.2s; }
+    .btn-dark:hover { background: var(--off-black); }
+
+    /* FOOTER */
+    footer { background: #0d0d0d; padding: 64px 52px 32px; color: rgba(255,255,255,0.45); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .footer-brand img { height: 48px; object-fit: contain; margin-bottom: 20px; display: block; filter: brightness(0) invert(1); opacity: 0.85; }
+    .footer-brand p { font-size: 0.8rem; line-height: 1.85; max-width: 240px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 22px; }
+    .social-link { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.45); transition: border-color 0.2s, color 0.2s; }
+    .social-link:hover { border-color: var(--lavender); color: var(--lavender); }
+    footer h4 { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender); margin-bottom: 18px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer a { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--lavender-lt); }
+    .footer-detail { font-size: 0.82rem; line-height: 2; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.7rem; letter-spacing: 0.06em; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links .hide-sm { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .cta-strip, footer { padding-left: 24px; padding-right: 24px; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 0 16px; height: 60px; }
+      .nav-logo img { height: 36px; }
+      .nav-links { gap: 10px; }
+      .nav-book { padding: 8px 16px; font-size: 0.65rem; }
+      .page-header-inner { padding: 36px 20px 36px; }
+      .quiz-wrap { padding: 36px 16px 64px; }
+      .options-grid { grid-template-columns: 1fr; }
+      .options-grid.three { grid-template-columns: 1fr 1fr; }
+      .name-row { grid-template-columns: 1fr; }
+      .email-step-inner { padding: 24px 20px; }
+      .result-card { padding: 28px 24px; }
+      .result-also { padding: 24px 20px; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 6px; }
+      .cta-strip { padding: 48px 20px; }
+      footer { padding: 44px 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="services.html" class="hide-sm">Services</a></li>
+    <li><a href="index.html#location" class="hide-sm">Contact</a></li>
+    <li><a href="tel:3123264549" class="hide-sm" style="font-size:0.72rem;font-weight:400;letter-spacing:0.06em;color:var(--gray-mid);">312-326-4549</a></li>
+    <li><a href="book-now.html" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,0.6);">Hair Quiz</span>
+    </div>
+    <h1>Find Your Perfect Service</h1>
+    <p>Answer 4 quick questions and we'll recommend the best Curl Kitchen service for your hair.</p>
+  </div>
+</div>
+
+<div class="quiz-wrap">
+
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <div class="progress-steps">
+      <div class="step-dot active" id="dot-1">1</div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2">2</div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-dot" id="dot-3">3</div>
+      <div class="step-line" id="line-3"></div>
+      <div class="step-dot" id="dot-4">4</div>
+      <div class="step-line" id="line-4"></div>
+      <div class="step-dot" id="dot-5">5</div>
+    </div>
+    <div class="progress-label" id="progress-label">Step 1 of 5 — Hair Type</div>
+  </div>
+
+  <!-- STEP 1: HAIR TYPE -->
+  <div class="step active" id="step-1">
+    <div class="step-header">
+      <h2>What's your curl pattern?</h2>
+      <p>Select the option that best describes your natural texture.</p>
+    </div>
+    <div class="options-grid" id="q1-grid">
+      <div class="option-card" data-q="1" data-val="straight" onclick="select(this)">
+        <span class="option-emoji">➖</span>
+        <span class="option-label">Straight (1A–1C)</span>
+        <span class="option-desc">Little to no curl, tends to be silky or fine, can get oily</span>
+      </div>
+      <div class="option-card" data-q="1" data-val="wavy" onclick="select(this)">
+        <span class="option-emoji">〰️</span>
+        <span class="option-label">Wavy (2A–2C)</span>
+        <span class="option-desc">Loose S-shaped waves, some frizz, tends to fall flat</span>
+      </div>
+      <div class="option-card" data-q="1" data-val="curly" onclick="select(this)">
+        <span class="option-emoji">🌀</span>
+        <span class="option-label">Curly (3A–3C)</span>
+        <span class="option-desc">Defined spirals and ringlets, can range from loose to tight</span>
+      </div>
+      <div class="option-card" data-q="1" data-val="coily" onclick="select(this)">
+        <span class="option-emoji">🌿</span>
+        <span class="option-label">Coily (4A–4B)</span>
+        <span class="option-desc">Tight coils with lots of shrinkage, dense and full</span>
+      </div>
+      <div class="option-card" data-q="1" data-val="kinky" onclick="select(this)">
+        <span class="option-emoji">✨</span>
+        <span class="option-label">Kinky (4C)</span>
+        <span class="option-desc">Very tight zig-zag pattern, significant shrinkage, very versatile</span>
+      </div>
+    </div>
+    <button class="btn-next" id="next-1" disabled onclick="goNext(1)">Next →</button>
+  </div>
+
+
+  <!-- STEP 2: HAIR LENGTH -->
+  <div class="step" id="step-2">
+    <div class="step-header">
+      <h2>How long is your hair right now?</h2>
+      <p>This helps us recommend the right service at the right price point.</p>
+    </div>
+    <div class="options-grid" id="q4-grid">
+      <div class="option-card" data-q="4" data-val="short" onclick="selectLength(this)">
+        <span class="option-emoji">✂️</span>
+        <span class="option-label">Short</span>
+        <span class="option-desc">Ear to chin length</span>
+      </div>
+      <div class="option-card" data-q="4" data-val="shoulder" onclick="selectLength(this)">
+        <span class="option-emoji">👤</span>
+        <span class="option-label">Shoulder Length</span>
+        <span class="option-desc">Hits at or just below the shoulder</span>
+      </div>
+      <div class="option-card" data-q="4" data-val="bra_strap" onclick="selectLength(this)">
+        <span class="option-emoji">📏</span>
+        <span class="option-label">Bra Strap Length</span>
+        <span class="option-desc">Mid-back, reaches the bra strap</span>
+      </div>
+      <div class="option-card" data-q="4" data-val="waist" onclick="selectLength(this)">
+        <span class="option-emoji">🌿</span>
+        <span class="option-label">Waist Length & Longer</span>
+        <span class="option-desc">Reaches the waist or beyond</span>
+      </div>
+    </div>
+    <button class="btn-next" id="next-2" disabled onclick="goNext(2)">Next →</button>
+    <button class="btn-back" onclick="goBack(2)">← Back</button>
+  </div>
+
+  <!-- STEP 3: HAIR CONCERN -->
+  <div class="step" id="step-3">
+    <div class="step-header">
+      <h2>What's your biggest hair concern right now?</h2>
+      <p>Pick up to 2 that apply most.</p>
+    </div>
+    <p class="multi-note">Select up to 2</p>
+    <div class="options-grid" id="q2-grid">
+      <div class="option-card" data-q="2" data-val="dryness" onclick="selectMulti(this, 2, 2)">
+        <span class="option-emoji">💧</span>
+        <span class="option-label">Dryness &amp; Moisture</span>
+        <span class="option-desc">Hair feels dry, brittle, or lacks shine</span>
+      </div>
+      <div class="option-card" data-q="2" data-val="damage" onclick="selectMulti(this, 2, 2)">
+        <span class="option-emoji">🔥</span>
+        <span class="option-label">Damage &amp; Breakage</span>
+        <span class="option-desc">Split ends, heat damage, or chemical processing damage</span>
+      </div>
+      <div class="option-card" data-q="2" data-val="scalp" onclick="selectMulti(this, 2, 2)">
+        <span class="option-emoji">🌱</span>
+        <span class="option-label">Scalp Health</span>
+        <span class="option-desc">Itchiness, dryness, buildup, or sensitivity</span>
+      </div>
+      <div class="option-card" data-q="2" data-val="frizz" onclick="selectMulti(this, 2, 2)">
+        <span class="option-emoji">⚡</span>
+        <span class="option-label">Frizz &amp; Definition</span>
+        <span class="option-desc">Hair lacks definition or has uncontrollable frizz</span>
+      </div>
+      <div class="option-card" data-q="2" data-val="growth" onclick="selectMulti(this, 2, 2)">
+        <span class="option-emoji">📏</span>
+        <span class="option-label">Length &amp; Retention</span>
+        <span class="option-desc">Hair isn't retaining length or growing slowly</span>
+      </div>
+      <div class="option-card" data-q="2" data-val="color_concern" onclick="selectMulti(this, 2, 2)">
+        <span class="option-emoji">🎨</span>
+        <span class="option-label">Color &amp; Roots</span>
+        <span class="option-desc">Faded color, visible roots, or uneven tone</span>
+      </div>
+      <div class="option-card" data-q="2" data-val="split_ends" onclick="selectMulti(this, 2, 2)">
+        <span class="option-emoji">✂️</span>
+        <span class="option-label">Split Ends &amp; Shape</span>
+        <span class="option-desc">Ends are damaged, hair lacks shape, or needs a fresh cut</span>
+      </div>
+    </div>
+    <button class="btn-next" id="next-3" disabled onclick="goNext(3)">Next →</button>
+    <button class="btn-back" onclick="goBack(3)">← Back</button>
+  </div>
+
+  <!-- STEP 3: HAIR GOAL -->
+  <div class="step" id="step-4">
+    <div class="step-header">
+      <h2>What do you want to walk out with?</h2>
+      <p>Choose your ideal end result.</p>
+    </div>
+    <div class="options-grid" id="q3-grid">
+      <div class="option-card" data-q="3" data-val="sleek" onclick="select(this)">
+        <span class="option-emoji">💎</span>
+        <span class="option-label">Sleek &amp; Straight</span>
+        <span class="option-desc">Smooth, polished look without chemicals</span>
+      </div>
+      <div class="option-card" data-q="3" data-val="defined" onclick="select(this)">
+        <span class="option-emoji">🌀</span>
+        <span class="option-label">Defined Natural Curls</span>
+        <span class="option-desc">Enhance and celebrate your natural texture</span>
+      </div>
+      <div class="option-card" data-q="3" data-val="color_goal" onclick="select(this)">
+        <span class="option-emoji">✨</span>
+        <span class="option-label">Fresh Color or Tone</span>
+        <span class="option-desc">New color, root coverage, or a gloss/toner refresh</span>
+      </div>
+      <div class="option-card" data-q="3" data-val="healthy" onclick="select(this)">
+        <span class="option-emoji">💚</span>
+        <span class="option-label">Healthier Hair</span>
+        <span class="option-desc">Strengthen, restore, and nourish from within</span>
+      </div>
+      <div class="option-card" data-q="3" data-val="protective" onclick="select(this)">
+        <span class="option-emoji">🛡️</span>
+        <span class="option-label">Protective Style</span>
+        <span class="option-desc">A style that gives your hair a break and retains length</span>
+      </div>
+      <div class="option-card" data-q="3" data-val="locs" onclick="select(this)">
+        <span class="option-emoji">🌿</span>
+        <span class="option-label">Loc Maintenance</span>
+        <span class="option-desc">Retwist or refresh my locs</span>
+      </div>
+    </div>
+    <button class="btn-next" id="next-4" disabled onclick="goNext(4)">Next →</button>
+    <button class="btn-back" onclick="goBack(4)">← Back</button>
+  </div>
+
+  <!-- STEP 4: EMAIL -->
+  <div class="step" id="step-5">
+    <div class="step-header">
+      <h2>Almost there — where should we send your results?</h2>
+      <p>We'll email your personalized service recommendation plus a special first-time offer.</p>
+    </div>
+    <div class="email-step-inner">
+      <div class="name-row">
+        <div>
+          <label class="email-label" for="first-name">First Name</label>
+          <input class="email-input" type="text" id="first-name" placeholder="Your first name" oninput="checkEmail()" />
+        </div>
+        <div>
+          <label class="email-label" for="last-name">Last Name</label>
+          <input class="email-input" type="text" id="last-name" placeholder="Your last name" />
+        </div>
+      </div>
+      <label class="email-label" for="email-input">Email Address</label>
+      <input class="email-input" type="email" id="email-input" placeholder="you@example.com" oninput="checkEmail()" />
+      <p class="email-note">We'll only use this to send your results. No spam, ever. You can unsubscribe anytime.</p>
+    </div>
+    <button class="btn-next" id="next-5" disabled onclick="showResult()">See My Recommendation →</button>
+    <button class="btn-back" onclick="goBack(5)">← Back</button>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result" id="result-section">
+    <div class="result-card">
+      <div class="result-tag" id="result-tag">Your Match</div>
+      <div class="result-title" id="result-title">Silk Press</div>
+      <div class="result-price" id="result-price">Starting at $85</div>
+      <div class="result-desc" id="result-desc">Based on your hair type and goals, the silk press is your ideal starting point.</div>
+      <div class="result-why" id="result-why"></div>
+      <a href="book-now.html" class="btn-book-result" id="result-book-btn">Book This Service →</a>
+    </div>
+
+    <div class="result-also" id="result-also">
+      <h3>You might also love…</h3>
+      <div class="also-items" id="also-items"></div>
+    </div>
+
+    <button class="retake-btn" onclick="retake()">↺ Retake the quiz</button>
+  </div>
+
+</div><!-- /quiz-wrap -->
+
+<div class="cta-strip">
+  <h2>Ready to come in?</h2>
+  <p>Book your appointment today — appointment only, no double-booking.</p>
+  <a href="book-now.html" class="btn-dark">Book Now</a>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="https://static.wixstatic.com/media/e57add_bc98e104ee69491ca99efdb4bea9b5a2~mv2.png/v1/fill/w_400,h_225,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ckslogo.png" alt="Curl Kitchen Salon" />
+      <p>Celebrating natural curls in Chicago since 2013. For naturally curly women, operated by naturally curly women, owned by a naturally curly woman.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/curlkitchensalon/" target="_blank" class="social-link">IG</a>
+        <a href="https://www.facebook.com/curlkitchensalon/" target="_blank" class="social-link">FB</a>
+        <a href="https://www.yelp.com/biz/curl-kitchen-chicago" target="_blank" class="social-link">YP</a>
+      </div>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="index.html#location">Contact</a></li>
+        <li><a href="book-now.html">Book Now</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Visit Us</h4>
+      <p class="footer-detail">3428 S. King Drive<br>Chicago, IL 60616<br><br><a href="tel:3123264549">(312) 326-4549</a><br><a href="mailto:curlkitchen@gmail.com">curlkitchen@gmail.com</a></p>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <ul style="list-style:none;font-size:0.8rem;line-height:1;color:rgba(255,255,255,0.45);">
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Mon</span><span>9am–2pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Tue–Thu</span><span>9am–9pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Fri</span><span>9am–6pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Sat</span><span>6am–6pm</span></li>
+        <li style="display:flex;justify-content:space-between;gap:20px;padding:5px 0;"><span>Sun</span><span>9am–6pm</span></li>
+      </ul>
+      <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:12px;font-style:italic;">By Appointment Only</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Curl Kitchen Salon · Chicago, IL</p>
+    <p>Est. Autumn 2013</p>
+  </div>
+</footer>
+
+<script>
+  // ── State ───────────────────────────────
+  const answers = { q1: null, q2: [], q3: null, q4: null, email: null, firstName: null };
+
+  const STEPS = [
+    { label: 'Hair Type' },
+    { label: 'Hair Concern' },
+    { label: 'Your Goal' },
+    { label: 'Your Results' },
+  ];
+
+  // ── Selection logic ─────────────────────
+  function select(card) {
+    const q = card.dataset.q;
+    document.querySelectorAll(`[data-q="${q}"]`).forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    answers[`q${q}`] = card.dataset.val;
+    document.getElementById(`next-${q}`).disabled = false;
+  }
+
+  function selectLength(card) {
+    document.querySelectorAll('[data-q="4"]').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    answers.q4 = card.dataset.val;
+    document.getElementById('next-2').disabled = false;
+  }
+
+  function selectMulti(card, q, max) {
+    const selected = document.querySelectorAll(`[data-q="${q}"].selected`);
+    if (!card.classList.contains('selected') && selected.length >= max) return;
+    card.classList.toggle('selected');
+    answers.q2 = [...document.querySelectorAll(`[data-q="2"].selected`)].map(c => c.dataset.val);
+    document.getElementById(`next-${q}`).disabled = answers.q2.length === 0;
+  }
+
+  // ── Navigation ──────────────────────────
+  function goNext(current) {
+    document.getElementById(`step-${current}`).classList.remove('active');
+    const next = current + 1;
+    document.getElementById(`step-${next}`).classList.add('active');
+    updateProgress(next);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goBack(current) {
+    document.getElementById(`step-${current}`).classList.remove('active');
+    const prev = current - 1;
+    document.getElementById(`step-${prev}`).classList.add('active');
+    updateProgress(prev);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress(step) {
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById(`dot-${i}`);
+      dot.classList.remove('active', 'done');
+      if (i < step) dot.classList.add('done');
+      else if (i === step) dot.classList.add('active');
+    }
+    for (let i = 1; i <= 4; i++) {
+      const line = document.getElementById(`line-${i}`);
+      line.classList.toggle('done', i < step);
+    }
+    const labels = ['Hair Type', 'Hair Length', 'Hair Concern', 'Your Goal', 'Your Email'];
+    document.getElementById('progress-label').textContent = `Step ${step} of 5 — ${labels[step - 1]}`;
+  }
+
+  // ── Email validation ────────────────────
+  function checkEmail() {
+    const email = document.getElementById('email-input').value;
+    const name = document.getElementById('first-name').value;
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && name.trim().length > 0;
+    document.getElementById('next-4').disabled = !valid;
+  }
+
+  // ── Recommendation engine ───────────────
+  const SERVICES = {
+    silkpress: {
+      title: 'Silk Press',
+      tag: 'Your Recommended Service',
+      price: silkpressPrice(),
+      desc: 'A Curl Kitchen signature. Your hair is cleansed, deep conditioned, blown dry, and flat-ironed to sleek perfection — all while protecting your natural curl underneath. A steam treatment and trim are included.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDodU4MdLSG/QmgXc/++bIbtqp0gNvRUmHLEdf97NNjKnPXANRKdvUX6J4UctOGf8ojKaf1TdXba1qmXJ2Zq9x86',
+    },
+    washgo: {
+      title: 'Wash & Go',
+      tag: 'Your Recommended Service',
+      price: '$80',
+      desc: 'The ultimate natural curl showcase. Your hair is cleansed, deep conditioned with a steam treatment, and curl-defining products are applied to bring out your best texture. Perfect for embracing what you were born with.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDoXtfI6gByA101IJ7RwYeA9e/XrPMZCvLqn9Q9XBgyIzf1z67r5l6mLiprFwX+NeHMGadMHFft7nTj3bVfxT82p',
+    },
+    rodset: {
+      title: 'Rod Set',
+      tag: 'Your Recommended Service',
+      price: '$95 – $110 (by size)',
+      desc: 'Defined, bouncy curls without direct heat. Your hair is set on perm rods and dried for a beautifully uniform curl pattern. Great for adding definition and volume to coily or kinky hair.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDrA5F5dgi9NniLqeK3bjs9EpdUtVLHKm3Pm+zX/SSeNZLyRMS8sADRXF7Qpf26b19UEVGwanEzfBgesjxkvDSsY',
+    },
+    olaplex: {
+      title: 'Olaplex Treatment',
+      tag: 'Your Recommended Service',
+      price: olaplexPrice(),
+      desc: 'Curl Kitchen\'s go-to for restoring damaged or compromised hair. Olaplex rebuilds broken bonds inside the hair strand, reversing damage from heat, color, or mechanical stress. Includes a steam treatment.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDqm6O9vpiLxZA9Xl0wzdkOaFeCSeKiGdldCyPwfL+IXJxCy6v/XKGKWJXinW9ctVKIKNyxKzssnsFSzozl9Amve',
+    },
+    scalp: {
+      title: 'Peppermint & Aloe Scalp Treatment',
+      tag: 'Your Recommended Service',
+      price: '$115',
+      desc: 'If your scalp is the root of your hair concerns, this is where to start. Our peppermint and aloe treatment calms inflammation, removes buildup, and creates the healthy foundation that healthy hair grows from.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDr/GsXG1mS1iSY2gcOkWHLEMFse4ySg1433jzuvINe/Gu9dHKhM1Awa0h4qVNjvWSkxjZjcPN+FmBa+zt9ZbBWO',
+    },
+    color: {
+      title: 'Single Color',
+      tag: 'Your Recommended Service',
+      price: '$160',
+      desc: 'A full all-over color application, custom-formulated for your natural hair. At Curl Kitchen, every color service is performed with your curl health as the priority — no compromising your texture for color.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpHn9EF36bLeP8JIYmoXJN4+qzsiI+1LyKL+Wt2prcMyli0cJKPZRD4FfOaBuFbRa9xVL4szOA4eN+2UZyNybY6',
+    },
+    rootTouchup: {
+      title: 'Root Touch Up',
+      tag: 'Your Recommended Service',
+      price: '$110 – $130 (by level)',
+      desc: 'Visible roots growing in? A root touch up freshens your color and blends regrowth for a polished, seamless look. Done with care for your natural curl and overall hair health.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDoRetvkWBP9+3jUqZFIJyyVZVQb4DaQyejHMiGsNnAqbdcqgpcQdlwFYR9DOxXwOp1paa7X69bpdokUWwx9wguS',
+    },
+    sewin: {
+      title: 'Partial Sew-In with Leave-Out',
+      tag: 'Your Recommended Service',
+      price: '$175',
+      desc: 'A protective style that gives your natural hair a complete break while keeping length and fullness. Hair is braided down, extensions are sewn in, and your leave-out blends naturally for a seamless finish.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDo2fAZ1tdXabUXb6vXT3Gb3TlR2Hb2d/PnPp7Uxgtp2aaK4N9CxT41o2X16hneGhreejZxtYU0PElcsk3//NiMs',
+    },
+    locs: {
+      title: 'Loc Retwist',
+      tag: 'Your Recommended Service',
+      price: locPrice(),
+      desc: 'Keep your locs looking fresh, neat, and healthy with a professional retwist. Our licensed cosmetologists retwist new growth to restore each loc to its original form — from shoulder length to waist length.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDorZTKwRVuZcMioYOwoQHJVrtHy1HGI6qINJtiTYxF2PmtTfSNkHUq+zfTZ+DLZw6RGSs2VrWqkgednLoBj2iTH',
+    },
+    cut: {
+      title: 'Bob or Lob Cut',
+      tag: 'Your Recommended Service',
+      price: '$100',
+      desc: 'A precision cut to remove damage, restore shape, and give your hair a healthy fresh start. Every cut at Curl Kitchen includes a trim and steam treatment, so you leave with healthier ends and a style tailored to your curl pattern.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDpuFBJGyall6u1bIAEV9Ah2IQrjb/GAzN9UX9YmxUYIPu0XAy5T16d0FP/boO4nZ7uGTSPHYiNar9T3TfdTyz/o',
+    },
+    smoothing: {
+      title: 'Smoothing Therapy Treatment',
+      tag: 'Your Recommended Service',
+      price: '$195',
+      desc: 'A strengthening and smoothing treatment that reduces frizz, adds intense shine, and improves manageability — all without permanently altering your curl pattern. The reset your hair has been asking for.',
+      why: [],
+      bookUrl: 'https://www.vagaro.com/Users/BusinessWidget.aspx?enc=MMLjhIwJMcwFQhXLL7ifVHCltjYMoBeqNLHzxAaGG5vh29uOQ1QldV0yPLTN1/tz1bIEls0dAPCeuGzfyv7OiEeJVgJD+ePnjhfI5OAQxh3Uiy+4eVY+6Vrn/G8nx+CR3FAJKwj8Jn5A/EDiOKrof8kna0OGexlDv8A4sU0S+TQV2KSuijba5Jm8AIWZTzsfh3X+FLrWTs9jMUU/vezgAgxjcyScCyiyzG7M0svDVkjx6U4mcb/U+o+O7XMrSwa23Tbg7mo/E4c0HoDLdKFbAs+4Bvtdjs0xv4nUWME7GSwiOwcTIzhQjoB2+Uk9B2SdAhIu/0Ntqd2xXkBck9DG23xT/eDeErKnRTSVWMTBCnJVfMFZmqeMgCmusK4FsKIPV6lyBpMSgjwRqYLQo3bC/yBU0T06ePKVzn71q8lcmDqbCb86YXkVyya0PsNi6B6BnvUrnFzWFkLqBm9b++k/44KvR42DmgUe0IP0QOWrdD7VDOxzLuox0iD8F7sD9iRr',
+    },
+  };
+
+  // ── Recommendation logic ────────────────
+  function recommend() {
+    const type = answers.q1;
+    const length = answers.q4; // 'short', 'shoulder', 'bra_strap', 'waist'
+    const concerns = answers.q2;
+    const goal = answers.q3;
+
+    // Helper: get length-aware price for silkpress
+    function silkpressPrice() {
+      if (length === 'waist') return '$105';
+      if (length === 'bra_strap') return '$100';
+      return '$85'; // short or shoulder
+    }
+    function blowoutPrice() {
+      if (length === 'waist') return '$85';
+      if (length === 'bra_strap') return '$75';
+      return '$70';
+    }
+    function olaplexPrice() {
+      return (length === 'bra_strap' || length === 'waist') ? '$130' : '$115';
+    }
+    function olaplexMaskPrice() {
+      return (length === 'bra_strap' || length === 'waist') ? '$130' : '$115';
+    }
+    function locPrice() {
+      if (length === 'waist') return '$160';
+      if (length === 'bra_strap') return '$130';
+      return '$100';
+    }
+    let serviceKey, why, also;
+
+    // Locs always wins if selected
+    if (goal === 'locs') {
+      serviceKey = 'locs';
+      why = ['You indicated you have locs that need maintenance', 'Our licensed cosmetologists perform professional retwists', 'Keeps your locs healthy, neat, and growing strong'];
+      also = [
+        { name: 'Olaplex Treatment', note: 'Add-on to restore moisture to your locs', url: SERVICES.olaplex.bookUrl },
+        { name: 'Healthy Hair Consultation', note: 'Start with a consultation if you\'re new', url: 'book-now.html' },
+      ];
+    }
+    // Protective style goal
+    else if (goal === 'protective') {
+      serviceKey = 'sewin';
+      why = ['You want to give your natural hair a break', 'Sew-ins protect your hair while retaining length', 'Great for growth goals and low-manipulation periods'];
+      also = [
+        { name: 'Rod Set', note: 'A natural protective style option', url: SERVICES.rodset.bookUrl },
+        { name: 'Hanging Twist / Braid Out', note: 'Low-manipulation protective set', url: 'services.html' },
+      ];
+    }
+    // Color goal
+    else if (goal === 'color_goal') {
+      if (concerns.includes('color_concern')) {
+        serviceKey = 'rootTouchup';
+        why = ['You have visible roots or faded color', 'A root touch up restores your color seamlessly', 'Performed with curl integrity as the priority'];
+        also = [
+          { name: 'Single Color', note: 'For a full color refresh', url: SERVICES.color.bookUrl },
+          { name: 'Toner (Demi + Silkpress)', note: 'For a gloss and tone refresh', url: 'services.html' },
+        ];
+      } else {
+        serviceKey = 'color';
+        why = ['Your goal is a fresh color transformation', 'Single color is the ideal starting point for natural hair', 'Every color service protects your curl pattern'];
+        also = [
+          { name: 'Root Touch Up', note: 'For targeted regrowth coverage', url: SERVICES.rootTouchup.bookUrl },
+          { name: 'Olaplex Add-On', note: 'Pair with color to protect bonds', url: SERVICES.olaplex.bookUrl },
+        ];
+      }
+    }
+    // Healthy hair goal
+    else if (goal === 'healthy') {
+      if (concerns.includes('scalp')) {
+        serviceKey = 'scalp';
+        why = ['You identified scalp health as a concern', 'Healthy growth starts with a healthy scalp', 'Peppermint & aloe calms, cleanses, and restores your scalp'];
+        also = [
+          { name: 'Olaplex Treatment', note: 'Follow up with a bond repair treatment', url: SERVICES.olaplex.bookUrl },
+          { name: 'Smoothing Therapy', note: 'For overall strengthening and frizz control', url: SERVICES.smoothing.bookUrl },
+        ];
+      } else if (concerns.includes('damage')) {
+        serviceKey = 'olaplex';
+        why = ['You identified damage or breakage as a concern', 'Olaplex rebuilds broken bonds inside the hair strand', 'The most effective repair treatment we offer'];
+        also = [
+          { name: 'Smoothing Therapy', note: 'Pairs well with Olaplex for severe damage', url: SERVICES.smoothing.bookUrl },
+          { name: 'Scalp Treatment', note: 'Address roots alongside repair', url: SERVICES.scalp.bookUrl },
+        ];
+      } else if (concerns.includes('frizz')) {
+        serviceKey = 'smoothing';
+        why = ['You want to manage frizz without altering your curl', 'Smoothing therapy tames frizz and adds shine long-term', 'No harsh chemicals — your curls remain intact'];
+        also = [
+          { name: 'Olaplex Treatment', note: 'For bond repair alongside smoothing', url: SERVICES.olaplex.bookUrl },
+          { name: 'Wash & Go', note: 'Maximize your natural definition', url: SERVICES.washgo.bookUrl },
+        ];
+      } else {
+        serviceKey = 'olaplex';
+        why = ['Olaplex is the foundation of healthy natural hair', 'Strengthens from within and adds lasting moisture', 'A steam treatment is included for maximum penetration'];
+        also = [
+          { name: 'Scalp Treatment', note: 'Combine for complete hair health', url: SERVICES.scalp.bookUrl },
+          { name: 'Wash & Go', note: 'Follow up with a natural style', url: SERVICES.washgo.bookUrl },
+        ];
+      }
+    }
+    // Sleek / straight goal
+    else if (goal === 'sleek') {
+      if (type === 'straight') {
+        serviceKey = 'silkpress';
+        why = [
+          'A blowout or silkpress adds polish and shine to straight hair',
+          'Steam treatment hydrates and smooths the cuticle for extra shine',
+          'Perfect for a sleek, finished look before an event or appointment',
+        ];
+        also = [
+          { name: 'Smoothing Therapy', note: 'For long-term frizz reduction', url: SERVICES.smoothing.bookUrl },
+          { name: 'Olaplex Treatment', note: 'Strengthen and add shine', url: SERVICES.olaplex.bookUrl },
+        ];
+      } else {
+        serviceKey = 'silkpress';
+        why = [
+          `Your ${type} texture responds beautifully to a silk press`,
+          'Sleek results without chemicals — your natural curl is preserved',
+          'Steam treatment is included to protect and hydrate your hair',
+        ];
+        also = [
+          { name: 'Blowout (No Flat Iron)', note: 'A softer, voluminous alternative', url: SERVICES.silkpress.bookUrl },
+          { name: 'Smoothing Therapy', note: 'For longer-lasting frizz control', url: SERVICES.smoothing.bookUrl },
+        ];
+      }
+    }
+    // Defined natural curls goal
+    else if (goal === 'defined') {
+      if (type === 'straight') {
+        serviceKey = 'rodset';
+        why = [
+          'A rod set can create beautiful curl definition on naturally straight hair',
+          'Heat-free technique that adds body and texture',
+          'A great way to experiment with curls without chemicals',
+        ];
+        also = [
+          { name: 'Wash & Go', note: 'If you have some natural texture to enhance', url: SERVICES.washgo.bookUrl },
+          { name: 'Healthy Hair Consultation', note: 'Chat with a stylist about your options', url: 'book-now.html' },
+        ];
+      } else if (type === 'wavy' || type === 'curly') {
+        serviceKey = 'washgo';
+        why = ['Your curl pattern is ideal for a wash & go', 'Bring out natural definition with zero heat', 'Steam treatment enhances curl hydration and definition'];
+        also = [
+          { name: 'Rod Set', note: 'For more uniform, structured definition', url: SERVICES.rodset.bookUrl },
+          { name: 'Hanging Twist / Braid Out', note: 'A protective style with beautiful definition', url: 'services.html' },
+        ];
+      } else {
+        serviceKey = 'rodset';
+        why = ['A rod set is perfect for 4A–4C hair that wants defined curls', 'Creates beautiful, uniform curl definition without heat', 'Your hair dries on rods for a bouncy, voluminous result'];
+        also = [
+          { name: 'Wash & Go', note: 'A quicker definition option', url: SERVICES.washgo.bookUrl },
+          { name: 'Bantu Knots', note: 'Another heat-free definition style', url: 'services.html' },
+        ];
+      }
+    }
+    // Fallback
+    else {
+      serviceKey = 'silkpress';
+      why = ['A great starting point for most natural hair types', 'Includes steam treatment and trim', 'Our most popular service at Curl Kitchen'];
+      also = [
+        { name: 'Wash & Go', note: 'If you prefer to go heat-free', url: SERVICES.washgo.bookUrl },
+        { name: 'Healthy Hair Consultation', note: 'Start here if you\'re unsure', url: 'book-now.html' },
+      ];
+    }
+
+    return { serviceKey, why, also };
+  }
+
+  // ── Show result ─────────────────────────
+  function showResult() {
+    answers.email = document.getElementById('email-input').value;
+    answers.firstName = document.getElementById('first-name').value;
+
+    document.getElementById('step-4').classList.remove('active');
+    const { serviceKey, why, also } = recommend();
+    const svc = SERVICES[serviceKey];
+
+    document.getElementById('result-tag').textContent = svc.tag;
+    document.getElementById('result-title').textContent = svc.title;
+    document.getElementById('result-price').textContent = svc.price;
+    document.getElementById('result-desc').textContent = svc.desc;
+    document.getElementById('result-book-btn').href = svc.bookUrl;
+
+    const whyEl = document.getElementById('result-why');
+    whyEl.innerHTML = why.map(w => `<div class="result-why-item">${w}</div>`).join('');
+
+    const alsoEl = document.getElementById('also-items');
+    alsoEl.innerHTML = also.map(a => `
+      <div class="also-item">
+        <span class="also-name">${a.name}<br><span style="font-size:0.72rem;color:var(--gray-mid);font-weight:400;">${a.note}</span></span>
+        <a href="${a.url}" class="also-link" target="_blank">Book →</a>
+      </div>
+    `).join('');
+
+    // Update progress
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById(`dot-${i}`);
+      dot.classList.remove('active');
+      dot.classList.add('done');
+    }
+    for (let i = 1; i <= 4; i++) document.getElementById(`line-${i}`).classList.add('done');
+    document.getElementById('progress-label').textContent = `✦ Your Results Are In`;
+
+    document.getElementById('result-section').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Retake ──────────────────────────────
+  function retake() {
+    answers.q1 = null; answers.q2 = []; answers.q3 = null; answers.q4 = null;
+    document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+    document.getElementById('email-input').value = '';
+    document.getElementById('first-name').value = '';
+    document.getElementById('last-name').value = '';
+    document.getElementById('result-section').classList.remove('active');
+    document.getElementById('step-1').classList.add('active');
+    updateProgress(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
